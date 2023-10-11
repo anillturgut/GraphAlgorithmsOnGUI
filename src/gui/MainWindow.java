@@ -36,7 +36,7 @@ public class MainWindow extends JPanel {
     }
 
     private void setTopPanel() {
-        JLabel info = new JLabel("Dijkstra Shortest Path Visualiser by Anil Turgut");
+        JLabel info = new JLabel("Graph Algorithm Visualiser by Anil Turgut");
         info.setForeground(new Color(230, 220, 250));
         JPanel panel = new JPanel();
         panel.setBackground(new Color(130, 50, 250));
