@@ -11,7 +11,7 @@ public class Main {
         } catch (Exception e) {  }
 
         JFrame j = new JFrame();
-        j.setTitle("Dijkstra Algorithm");
+        j.setTitle("Graph & Network GUI");
 
         j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         j.setSize(new Dimension(900, 600));

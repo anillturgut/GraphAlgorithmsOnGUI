@@ -50,14 +50,18 @@ public class MainWindow extends JPanel {
         setupIcon(run, "run");
         JButton reset = new JButton();
         setupIcon(reset, "reset");
-        final JButton info = new JButton();
+        JButton info = new JButton();
         setupIcon(info, "info");
+        final JButton personal = new JButton();
+        setupIcon(personal, "boun");
+
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(DrawUtils.parseColor("#DDDDDD"));
         buttonPanel.add(reset);
         buttonPanel.add(run);
         buttonPanel.add(info);
+        buttonPanel.add(personal);
 
         reset.addActionListener(new ActionListener() {
             @Override
@@ -92,6 +96,16 @@ public class MainWindow extends JPanel {
                 } catch (IllegalStateException ise){
                     JOptionPane.showMessageDialog(null, ise.getMessage());
                 }
+            }
+        });
+
+        personal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null,
+                        "Anil Turgut <----->  2022702072\n" +
+                                "Industrial Engineering MSc Student\n" +
+                                "Bogazici University\n\n");
             }
         });
 
