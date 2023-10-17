@@ -93,6 +93,9 @@ public class MainWindow extends JPanel {
                 try{
                     dijkstraAlgorithm.run();
                     graphPanel.setPath(dijkstraAlgorithm.getDestinationPath());
+                    JOptionPane.showMessageDialog(null,
+                            "Shortest Path: " + dijkstraAlgorithm.getDestinationPathAsString() + "\n"
+                            + "              Total Distance: " + dijkstraAlgorithm.getDestinationDistance());
                 } catch (IllegalStateException ise){
                     JOptionPane.showMessageDialog(null, ise.getMessage());
                 }

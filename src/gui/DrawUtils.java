@@ -5,12 +5,15 @@ import models.Node;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
 import java.util.*;
 import java.util.List;
 
 public class DrawUtils {
     private Graphics2D g;
     private static int radius = 20;
+
+    private final int ARR_SIZE = 10;
 
     public DrawUtils(Graphics2D graphics2D){
         g = graphics2D;
@@ -102,12 +105,27 @@ public class DrawUtils {
         drawBaseEdge(edge);
         drawWeight(edge);
     }
+    public void drawArrow(Graphics g1, int x1, int y1, int x2, int y2) {
+        Graphics2D g = (Graphics2D) g1.create();
 
+        double dx = x2 - x1, dy = y2 - y1;
+        double angle = Math.atan2(dy, dx);
+        int len = (int) (Math.sqrt(dx*dx+ dy*dy) - radius);
+        AffineTransform at = AffineTransform.getTranslateInstance(x1, y1);
+        at.concatenate(AffineTransform.getRotateInstance(angle));
+        g.transform(at);
+
+        // Draw horizontal arrow starting in (0, 0)
+        g.drawLine(0, 0, len, 0);
+        g.fillPolygon(new int[] {len, len-ARR_SIZE, len-ARR_SIZE, len},
+                new int[] {0, -ARR_SIZE, ARR_SIZE, 0}, 4);
+    }
     private void drawBaseEdge(Edge edge){
         Point from = edge.getNodeOne().getCoord();
         Point to = edge.getNodeTwo().getCoord();
         g.setStroke(new BasicStroke(3));
-        g.drawLine(from.x, from.y, to.x, to.y);
+       // g.drawLine(from.x, from.y, to.x, to.y);
+        drawArrow(g,from.x,from.y,to.x,to.y);
     }
 
     public void drawHalo(Node node){

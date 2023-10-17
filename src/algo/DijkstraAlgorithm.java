@@ -145,6 +145,16 @@ public class DijkstraAlgorithm {
         return getPath(graph.getDestination());
     }
 
+    public String getDestinationPathAsString(){
+        String path = "";
+        List<Node> nodeList = getPath(graph.getDestination());
+        for(int i = 0; i < nodeList.toArray().length-1; i++){
+            path += nodeList.toArray()[i] + "->";
+        }
+        path += nodeList.toArray()[nodeList.toArray().length-1];
+        return path;
+    }
+
     public List<Node> getPath(Node node){
         List<Node> path = new ArrayList<>();
 
