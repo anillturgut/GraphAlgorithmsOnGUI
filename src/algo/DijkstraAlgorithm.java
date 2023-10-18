@@ -126,7 +126,8 @@ public class DijkstraAlgorithm {
         List<Edge> neighbors = new ArrayList<>();
 
         for(Edge edge : graph.getEdges()){
-            if(edge.getNodeOne()==node ||edge.getNodeTwo()==node)
+            //if(edge.getNodeOne()==node ||edge.getNodeTwo()==node)
+            if(edge.getNodeOne()==node)
                 neighbors.add(edge);
         }
 
