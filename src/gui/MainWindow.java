@@ -16,12 +16,14 @@ public class MainWindow extends JPanel {
     private Graph graph;
     private GraphPanel graphPanel;
 
-    public MainWindow(){
+    private JComboBox<String> comboBox;
+
+    public MainWindow() {
         super.setLayout(new BorderLayout());
         setGraphPanel();
     }
 
-    private void setGraphPanel(){
+    private void setGraphPanel() {
         graph = new Graph();
         graphPanel = new GraphPanel(graph);
         graphPanel.setPreferredSize(new Dimension(9000, 4096));
@@ -45,13 +47,17 @@ public class MainWindow extends JPanel {
         add(panel, BorderLayout.NORTH);
     }
 
-    private void setButtons(){
+    private void setButtons() {
         JButton run = new JButton();
         setupIcon(run, "run");
         JButton reset = new JButton();
         setupIcon(reset, "reset");
         JButton info = new JButton();
         setupIcon(info, "info");
+        JButton algorithm = new JButton();
+        setupIcon(algorithm, "algorithm");
+        algorithm.addActionListener(new ButtonListener());
+
         final JButton personal = new JButton();
         setupIcon(personal, "boun");
 
@@ -61,7 +67,14 @@ public class MainWindow extends JPanel {
         buttonPanel.add(reset);
         buttonPanel.add(run);
         buttonPanel.add(info);
+        buttonPanel.add(algorithm, BorderLayout.BEFORE_FIRST_LINE);
+        comboBox = new JComboBox<>();
+        comboBox.setBackground(DrawUtils.parseColor("#DDDDDD"));
+        comboBox.setPreferredSize(new Dimension(100,30));
+        comboBox.setVisible(false);
+        buttonPanel.add(comboBox, BorderLayout.CENTER);
         buttonPanel.add(personal);
+
 
         reset.addActionListener(new ActionListener() {
             @Override
@@ -75,29 +88,34 @@ public class MainWindow extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null,
                         "Click on empty space to create new node\n" +
-                        "Drag from node to node to create an edge\n" +
-                        "Click on edges to set the weight\n\n" +
-                        "Combinations:\n" +
-                        "Shift + Left Click       :    Set node as source\n" +
-                        "Shift + Right Click     :    Set node as destination\n" +
-                        "Ctrl  + Drag               :    Reposition Node\n" +
-                        "Ctrl  + Click                :    Get Path of Node\n" +
-                        "Ctrl  + Shift + Click   :    Delete Node/Edge\n");
+                                "Drag from node to node to create an edge\n" +
+                                "Click on edges to set the weight\n\n" +
+                                "Combinations:\n" +
+                                "Shift + Left Click       :    Set node as source\n" +
+                                "Shift + Right Click     :    Set node as destination\n" +
+                                "Ctrl  + Drag               :    Reposition Node\n" +
+                                "Ctrl  + Click                :    Get Path of Node\n" +
+                                "Ctrl  + Shift + Click   :    Delete Node/Edge\n");
             }
         });
 
         run.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
-                try{
-                    dijkstraAlgorithm.run();
-                    graphPanel.setPath(dijkstraAlgorithm.getDestinationPath());
+                if (comboBox.getSelectedItem() == "Dijkstra's"){
+                    DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
+                    try {
+                        dijkstraAlgorithm.run();
+                        graphPanel.setPath(dijkstraAlgorithm.getDestinationPath());
+                        JOptionPane.showMessageDialog(null,
+                                "Shortest Path: " + dijkstraAlgorithm.getDestinationPathAsString() + "\n"
+                                        + "              Total Distance: " + dijkstraAlgorithm.getDestinationDistance());
+                    } catch (IllegalStateException ise) {
+                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                    }
+                } else {
                     JOptionPane.showMessageDialog(null,
-                            "Shortest Path: " + dijkstraAlgorithm.getDestinationPathAsString() + "\n"
-                            + "              Total Distance: " + dijkstraAlgorithm.getDestinationDistance());
-                } catch (IllegalStateException ise){
-                    JOptionPane.showMessageDialog(null, ise.getMessage());
+                            comboBox.getSelectedItem()+" algorithm has not been developed yet." );
                 }
             }
         });
@@ -115,7 +133,7 @@ public class MainWindow extends JPanel {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    private void setupIcon(JButton button, String img){
+    private void setupIcon(JButton button, String img) {
         try {
             Image icon = ImageIO.read(getClass().getResource(
                     "/resources/" + img + ".png"));
@@ -129,4 +147,21 @@ public class MainWindow extends JPanel {
         }
     }
 
+    public class ButtonListener implements ActionListener {
+
+        private boolean firstTimeSwitch = true;
+
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            if (firstTimeSwitch) {
+                String[] selection = {"Dijkstra's", "Topological", "Bellman-Ford"};
+                for (int index = 0; index < selection.length; index++) {
+                    comboBox.addItem(selection[index]);
+                }
+
+                firstTimeSwitch = false;
+            }
+            comboBox.setVisible(!comboBox.isVisible());
+        }
+    }
 }
