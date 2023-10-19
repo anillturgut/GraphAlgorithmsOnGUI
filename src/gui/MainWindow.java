@@ -50,17 +50,20 @@ public class MainWindow extends JPanel {
     private void setButtons() {
         JButton run = new JButton();
         setupIcon(run, "run");
+        run.setToolTipText("Run the model with the selected algorithm");
         JButton reset = new JButton();
         setupIcon(reset, "reset");
+        reset.setToolTipText("Clear the network");
         JButton info = new JButton();
         setupIcon(info, "info");
+        info.setToolTipText("Button & network information");
         JButton algorithm = new JButton();
         setupIcon(algorithm, "algorithm");
+        algorithm.setToolTipText("Click to select an algorithm to solve the network problem");
         algorithm.addActionListener(new ButtonListener());
-
         final JButton personal = new JButton();
         setupIcon(personal, "boun");
-
+        personal.setToolTipText("My Information");
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(DrawUtils.parseColor("#DDDDDD"));
@@ -126,7 +129,8 @@ public class MainWindow extends JPanel {
                 JOptionPane.showMessageDialog(null,
                         "Anil Turgut <----->  2022702072\n" +
                                 "Industrial Engineering MSc Student\n" +
-                                "Bogazici University\n\n");
+                                "Bogazici University\n\n" +
+                                "GitHub: https://github.com/anillturgut");
             }
         });
 
