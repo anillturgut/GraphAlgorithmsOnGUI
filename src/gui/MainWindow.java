@@ -121,7 +121,9 @@ public class MainWindow extends JPanel {
                     BreadthFirstSearchAlgorithm breadthFirstSearchAlgorithm = new BreadthFirstSearchAlgorithm(graph);
                     try {
                         breadthFirstSearchAlgorithm.run();
-                        //graphPanel.setPath(breadthFirstSearchAlgorithm.getDestinationPath());
+                        graphPanel.setPath(breadthFirstSearchAlgorithm.getDestinationPath());
+                        JOptionPane.showMessageDialog(null,
+                                "Traversed Path: " + breadthFirstSearchAlgorithm.getDestinationPathAsString() + "\n");
                     } catch (IllegalStateException ise) {
                         JOptionPane.showMessageDialog(null, ise.getMessage());
                     }

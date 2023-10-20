@@ -11,41 +11,37 @@ public class BreadthFirstSearchAlgorithm {
     private boolean safe = false;
     private String message = null;
 
+    private Map<Node, Integer> distances;
     private Graph graph;
     private Map<Node, Node> predecessors;
-    private Map<Node, Integer> distances;
 
-    private HashSet<Node> unmarked;
-    private HashSet<Node> marked;
+    private HashSet<Node> traversedNodes;
+    private PriorityQueue<Node> marked;
 
 
+    public class NodeComparator implements Comparator<Node>  {
+        @Override
+        public int compare(Node node1, Node node2) {
+            return distances.get(node1) - distances.get(node2);
+        }
+    };
     public BreadthFirstSearchAlgorithm(Graph graph){
         this.graph = graph;
-        unmarked = new HashSet<>();
-        marked = new HashSet<>();
+        marked = new PriorityQueue<>();
+        predecessors = new HashMap<>();
+        traversedNodes = new HashSet<Node>();
+        distances = new HashMap<>();
 
-        marked = new HashSet<>();
+        for(Node node : graph.getNodes()){
+            distances.put(node, Integer.MAX_VALUE);
+        }
 
         safe = evaluate();
-    }
-
-    private HashSet<Node> getUnmarked(Graph graph){
-        for(Node node: graph.getNodes()){
-            if(node != graph.getSource()){
-                unmarked.add(node);
-            }
-        }
-        return  unmarked;
     }
 
     private boolean evaluate(){
         if(graph.getSource()==null){
             message = "Source must be present in the graph";
-            return false;
-        }
-
-        if(graph.getDestination()==null){
-            message = "Destination must be present in the graph";
             return false;
         }
 
@@ -60,7 +56,7 @@ public class BreadthFirstSearchAlgorithm {
     }
 
     private Node getAdjacent(Edge edge, Node node) {
-        if(edge.getNodeOne()!=node && edge.getNodeTwo()!=node)
+        if(edge.getNodeOne()!=node)
             return null;
 
         return node==edge.getNodeTwo()?edge.getNodeOne():edge.getNodeTwo();
@@ -70,7 +66,6 @@ public class BreadthFirstSearchAlgorithm {
         List<Edge> neighbors = new ArrayList<>();
 
         for(Edge edge : graph.getEdges()){
-            //if(edge.getNodeOne()==node ||edge.getNodeTwo()==node)
             if(edge.getNodeOne()==node)
                 neighbors.add(edge);
         }
@@ -82,24 +77,56 @@ public class BreadthFirstSearchAlgorithm {
         if(!safe) {
             throw new IllegalStateException(message);
         }
-        HashSet<Node> unmarkedList = getUnmarked(graph);
+        marked = new PriorityQueue<>(graph.getNodes().size(), new NodeComparator());
+        traversedNodes = new HashSet<>(graph.getNodes().size());
         Node source = graph.getSource();
         marked.add(source);
+        traversedNodes.add(source);
 
-        while (unmarkedList.size() != 0){
 
-            Node selectedNode = unmarkedList.stream().findFirst().get();
+        while (!marked.isEmpty()){
+
+            Node selectedNode = marked.peek();
 
             for (Edge neighbor : getNeighbors(selectedNode)) {
                 Node adjacent = getAdjacent(neighbor, selectedNode);
-                if (adjacent == null)
-                    continue;
-                marked.add(adjacent);
+                if (adjacent != null && !marked.contains(adjacent)){
+                    distances.put(adjacent, neighbor.getWeight());
+                    marked.add(adjacent);
+                    traversedNodes.add(adjacent);
+                    predecessors.put(adjacent, selectedNode);
+                }
             }
+            marked.remove(selectedNode);
+        }
+        graph.setSolved(true);
+    }
 
+    public List<Node> getDestinationPath() {
+        return getPath(graph.getDestination());
+    }
+
+    public List<Node> getPath(Node node){
+        List<Node> path = new ArrayList<>();
+
+        Node current = node;
+        path.add(current);
+        while (current!=graph.getSource()){
+            current = predecessors.get(current);
+            path.add(current);
         }
 
-        graph.setSolved(true);
+        Collections.reverse(path);
 
+        return path;
+    }
+    public String getDestinationPathAsString(){
+        String path = "";
+        List<Node> nodeList = getPath(graph.getDestination());
+        for(int i = 0; i < nodeList.toArray().length-1; i++){
+            path += nodeList.toArray()[i] + "->";
+        }
+        path += nodeList.toArray()[nodeList.toArray().length-1];
+        return path;
     }
 }
