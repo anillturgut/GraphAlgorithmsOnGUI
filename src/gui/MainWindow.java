@@ -126,6 +126,8 @@ public class MainWindow extends JPanel {
                                 "Traversed Path: " + breadthFirstSearchAlgorithm.getDestinationPathAsString() + "\n");
                     } catch (IllegalStateException ise) {
                         JOptionPane.showMessageDialog(null, ise.getMessage());
+                    } catch (OutOfMemoryError ome) {
+                        JOptionPane.showMessageDialog(null, "Memory error, control it.");
                     }
                 }
                 else {

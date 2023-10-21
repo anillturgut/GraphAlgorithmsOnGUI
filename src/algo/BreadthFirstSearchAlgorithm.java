@@ -14,9 +14,11 @@ public class BreadthFirstSearchAlgorithm {
     private Map<Node, Integer> distances;
     private Graph graph;
     private Map<Node, Node> predecessors;
-
-    private HashSet<Node> traversedNodes;
     private PriorityQueue<Node> marked;
+
+    private List<Node> traversedPath;
+
+    private List<Node> traversedPathDistinct;
 
 
     public class NodeComparator implements Comparator<Node>  {
@@ -29,8 +31,9 @@ public class BreadthFirstSearchAlgorithm {
         this.graph = graph;
         marked = new PriorityQueue<>();
         predecessors = new HashMap<>();
-        traversedNodes = new HashSet<Node>();
         distances = new HashMap<>();
+        traversedPath =  new ArrayList<>();
+        traversedPathDistinct = new ArrayList<>();
 
         for(Node node : graph.getNodes()){
             distances.put(node, Integer.MAX_VALUE);
@@ -78,11 +81,9 @@ public class BreadthFirstSearchAlgorithm {
             throw new IllegalStateException(message);
         }
         marked = new PriorityQueue<>(graph.getNodes().size(), new NodeComparator());
-        traversedNodes = new HashSet<>(graph.getNodes().size());
         Node source = graph.getSource();
         marked.add(source);
-        traversedNodes.add(source);
-
+        traversedPathDistinct.add(source);
 
         while (!marked.isEmpty()){
 
@@ -93,8 +94,10 @@ public class BreadthFirstSearchAlgorithm {
                 if (adjacent != null && !marked.contains(adjacent)){
                     distances.put(adjacent, neighbor.getWeight());
                     marked.add(adjacent);
-                    traversedNodes.add(adjacent);
                     predecessors.put(adjacent, selectedNode);
+                    traversedPath.add(selectedNode);
+                    traversedPath.add(adjacent);
+                    traversedPathDistinct.add(adjacent);
                 }
             }
             marked.remove(selectedNode);
@@ -103,26 +106,12 @@ public class BreadthFirstSearchAlgorithm {
     }
 
     public List<Node> getDestinationPath() {
-        return getPath(graph.getDestination());
+        return traversedPath;
     }
 
-    public List<Node> getPath(Node node){
-        List<Node> path = new ArrayList<>();
-
-        Node current = node;
-        path.add(current);
-        while (current!=graph.getSource()){
-            current = predecessors.get(current);
-            path.add(current);
-        }
-
-        Collections.reverse(path);
-
-        return path;
-    }
     public String getDestinationPathAsString(){
         String path = "";
-        List<Node> nodeList = getPath(graph.getDestination());
+        List<Node> nodeList = traversedPathDistinct;
         for(int i = 0; i < nodeList.toArray().length-1; i++){
             path += nodeList.toArray()[i] + "->";
         }
