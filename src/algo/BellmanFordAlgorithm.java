@@ -4,6 +4,7 @@ import models.Edge;
 import models.Graph;
 import models.Node;
 
+import javax.swing.*;
 import java.util.*;
 public class BellmanFordAlgorithm {
 
@@ -13,13 +14,6 @@ public class BellmanFordAlgorithm {
     private Graph graph;
     private Map<Node, Node> predecessors;
     private Map<Node, Integer> distances;
-
-    public class NodeComparator implements Comparator<Node>  {
-        @Override
-        public int compare(Node node1, Node node2) {
-            return distances.get(node1) - distances.get(node2);
-        }
-    };
 
     public BellmanFordAlgorithm(Graph graph){
         this.graph = graph;
@@ -74,11 +68,19 @@ public class BellmanFordAlgorithm {
                     done = false;
                 }
             }
+            isNegativeCycleDetected();
         }
         graph.setSolved(true);
 
     }
-
+    public void isNegativeCycleDetected(){
+        for(Edge edge: graph.getEdges()){
+            if( distances.get(edge.getNodeOne())  != Integer.MAX_VALUE &&
+                    (distances.get(edge.getNodeTwo()) > distances.get(edge.getNodeOne()) + edge.getWeight())){
+                JOptionPane.showMessageDialog( null, "Negative Cycle Detected!");
+            }
+        }
+    }
     public Integer getDestinationDistance(){
         return distances.get(graph.getDestination());
     }

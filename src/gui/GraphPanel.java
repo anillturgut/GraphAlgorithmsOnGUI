@@ -133,13 +133,9 @@ public class GraphPanel extends JPanel implements MouseListener, MouseMotionList
                                                         + " : ");
             try {
                 int weight = Integer.parseInt(input);
-                if (weight > 0) {
                     hoveredEdge.setWeight(weight);
                     graph.setSolved(false);
                     repaint();
-                } else {
-                    JOptionPane.showMessageDialog( null, "Weight should be positive");
-                }
             } catch (NumberFormatException nfe) {}
             return;
         }
