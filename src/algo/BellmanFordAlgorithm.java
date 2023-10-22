@@ -57,29 +57,35 @@ public class BellmanFordAlgorithm {
 
         boolean done = false;
 
-        while (!done){
-
-            done = true;
+        for(Node node: graph.getNodes()){
 
             for(Edge edge: graph.getEdges()){
+
                 if(distances.get(edge.getNodeTwo()) > distances.get(edge.getNodeOne()) + edge.getWeight()){
                     distances.put(edge.getNodeTwo(),distances.get(edge.getNodeOne()) + edge.getWeight());
                     predecessors.put(edge.getNodeTwo(),edge.getNodeOne());
-                    done = false;
                 }
             }
-            isNegativeCycleDetected();
         }
-        graph.setSolved(true);
+        if(isNegativeCycleDetected()){
+            //JOptionPane.showMessageDialog( null, "Negative Cycle Detected!");
+            String warn = "Negative Cycle Detected!";
+            graph.setSolved(false);
+            throw new IllegalStateException(warn);
 
+        }else{
+            graph.setSolved(true);
+        }
     }
-    public void isNegativeCycleDetected(){
+    public boolean isNegativeCycleDetected(){
+        boolean flag = false;
         for(Edge edge: graph.getEdges()){
-            if( distances.get(edge.getNodeOne())  != Integer.MAX_VALUE &&
+            if(distances.get(edge.getNodeOne())  != Integer.MAX_VALUE &&
                     (distances.get(edge.getNodeTwo()) > distances.get(edge.getNodeOne()) + edge.getWeight())){
-                JOptionPane.showMessageDialog( null, "Negative Cycle Detected!");
+                flag = true;
             }
         }
+        return flag;
     }
     public Integer getDestinationDistance(){
         return distances.get(graph.getDestination());
