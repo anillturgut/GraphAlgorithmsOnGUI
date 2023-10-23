@@ -3,6 +3,7 @@ package gui;
 import algo.BellmanFordAlgorithm;
 import algo.BreadthFirstSearchAlgorithm;
 import algo.DijkstraAlgorithm;
+import algo.TopologicalOrderingAlgorithm;
 import models.Graph;
 
 import javax.imageio.ImageIO;
@@ -145,7 +146,22 @@ public class MainWindow extends JPanel {
                     } catch (OutOfMemoryError ome) {
                         JOptionPane.showMessageDialog(null, "Memory error, control it.");
                     }
-                }else {
+                }else if (comboBox.getSelectedItem() == "Topological-Ordering") {
+                    TopologicalOrderingAlgorithm topologicalOrderingAlgorithm = new TopologicalOrderingAlgorithm(graph);
+                    try {
+                        topologicalOrderingAlgorithm.run();
+                        /*
+                        graphPanel.setPath(bellmanFordAlgorithm.getDestinationPath());
+                        JOptionPane.showMessageDialog(null,
+                                "Shortest Path: " + bellmanFordAlgorithm.getDestinationPathAsString() + "\n"
+                                        + "              Total Distance: " + bellmanFordAlgorithm.getDestinationDistance());
+                        */
+                    } catch (IllegalStateException ise) {
+                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                    } catch (OutOfMemoryError ome) {
+                        JOptionPane.showMessageDialog(null, "Memory error, control it.");
+                    }
+                } else {
                     JOptionPane.showMessageDialog(null,
                             comboBox.getSelectedItem()+" algorithm has not been developed yet." );
                 }
@@ -187,7 +203,7 @@ public class MainWindow extends JPanel {
         @Override
         public void actionPerformed(ActionEvent event) {
             if (firstTimeSwitch) {
-                String[] selection = {"Dijkstra's", "Bread-First-Search", "Topological", "Bellman-Ford"};
+                String[] selection = {"Dijkstra's", "Bread-First-Search", "Topological-Ordering", "Bellman-Ford"};
                 for (int index = 0; index < selection.length; index++) {
                     comboBox.addItem(selection[index]);
                 }
