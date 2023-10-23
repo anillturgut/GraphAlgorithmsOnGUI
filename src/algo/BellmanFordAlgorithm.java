@@ -15,6 +15,8 @@ public class BellmanFordAlgorithm {
     private Map<Node, Node> predecessors;
     private Map<Node, Integer> distances;
 
+    private boolean done;
+
     public BellmanFordAlgorithm(Graph graph){
         this.graph = graph;
         predecessors = new HashMap<>();
@@ -56,16 +58,21 @@ public class BellmanFordAlgorithm {
         distances.put(source, 0);
 
         boolean done = false;
+        int loopCounter = 0;
 
-        for(Node node: graph.getNodes()){
+        while(!done && (loopCounter < graph.getNodes().size())){
+
+            done = true;
 
             for(Edge edge: graph.getEdges()){
 
                 if(distances.get(edge.getNodeTwo()) > distances.get(edge.getNodeOne()) + edge.getWeight()){
                     distances.put(edge.getNodeTwo(),distances.get(edge.getNodeOne()) + edge.getWeight());
                     predecessors.put(edge.getNodeTwo(),edge.getNodeOne());
+                    done = false;
                 }
             }
+            loopCounter++;
         }
         if(isNegativeCycleDetected()){
             //JOptionPane.showMessageDialog( null, "Negative Cycle Detected!");
