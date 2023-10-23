@@ -29,7 +29,10 @@ public class TopologicalOrderingAlgorithm {
         predecessors = new HashMap<>();
         distances = new HashMap<>();
         inDegree = new HashMap<>();
-        barrenNodes = new PriorityQueue<>();
+
+        for(Node node : graph.getNodes()){
+            distances.put(node, Integer.MAX_VALUE);
+        }
 
 
         safe = evaluate();
@@ -80,7 +83,7 @@ public class TopologicalOrderingAlgorithm {
     }
 
     public void initializeAlgorithm(){
-        inDegree = new HashMap<Node, Integer>();
+        inDegree = new HashMap<>();
         for (Node node : graph.getNodes())
             inDegree.put(node, 0);
 
@@ -95,7 +98,7 @@ public class TopologicalOrderingAlgorithm {
                 barrenNodes.add(node);
     }
 
-    /*
+
     public List<Node> getTopolologicalOrder() {
         List<Node> topologicalOrder = new ArrayList<>();
         while (!barrenNodes.isEmpty()) {
@@ -113,31 +116,18 @@ public class TopologicalOrderingAlgorithm {
         }
         return  topologicalOrder;
     }
-    */
+
     public void run() throws IllegalStateException {
         if (!safe) {
             throw new IllegalStateException(message);
         }
         barrenNodes = new PriorityQueue<>(graph.getNodes().size(), new NodeComparator());
         initializeAlgorithm();
-        List<Node> topologicalOrder = new ArrayList<>();
-        while (!barrenNodes.isEmpty()) {
-            Node node = barrenNodes.poll();
-            topologicalOrder.add(node);
-
-            for (Edge neighbor : getNeighbors(node)) {
-                Node adjacent = getAdjacent(neighbor, node);
-                int degree = inDegree.get(adjacent);
-                --degree;
-                if (degree == 0)
-                    barrenNodes.add(adjacent);
-                inDegree.put(adjacent, degree);
-            }
-        }
+        List<Node> topologicalOrder = getTopolologicalOrder();
 
         Node source = graph.getSource();
         distances.put(source, 0);
         JOptionPane.showMessageDialog(null,
                 topologicalOrder );
+        }
     }
-}
