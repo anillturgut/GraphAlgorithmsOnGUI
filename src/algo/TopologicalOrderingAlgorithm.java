@@ -15,7 +15,7 @@ public class TopologicalOrderingAlgorithm {
     private Graph graph;
     private Map<Node, Node> predecessors;
     private Map<Node, Integer> distances;
-
+    private Map<Node, Node> topologicalPredecessors;
     private Map<Node, Integer> inDegree;
 
     private PriorityQueue<Node> barrenNodes;
@@ -27,6 +27,7 @@ public class TopologicalOrderingAlgorithm {
 
         this.graph = graph;
         predecessors = new HashMap<>();
+        topologicalPredecessors = new HashMap<>();
         distances = new HashMap<>();
         inDegree = new HashMap<>();
 
@@ -67,12 +68,19 @@ public class TopologicalOrderingAlgorithm {
         List<Edge> neighbors = new ArrayList<>();
 
         for(Edge edge : graph.getEdges()){
-            //if(edge.getNodeOne()==node ||edge.getNodeTwo()==node)
             if(edge.getNodeOne()==node)
                 neighbors.add(edge);
         }
 
         return neighbors;
+    }
+    private Edge getTopologicalNeighbor(Node startNode, Node endNode){
+        Edge resultEdge = new Edge(startNode,endNode);
+        for(Edge edge : graph.getEdges()){
+            if(edge.getNodeOne()==startNode && edge.getNodeTwo() == endNode)
+                resultEdge = edge;
+        }
+        return resultEdge;
     }
 
     private Node getAdjacent(Edge edge, Node node) {
@@ -104,13 +112,13 @@ public class TopologicalOrderingAlgorithm {
         while (!barrenNodes.isEmpty()) {
             Node node = barrenNodes.poll();
             topologicalOrder.add(node);
-
             for (Edge neighbor : getNeighbors(node)) {
                 Node adjacent = getAdjacent(neighbor, node);
                 int degree = inDegree.get(adjacent);
                 --degree;
                 if (degree == 0)
                     barrenNodes.add(adjacent);
+                    topologicalPredecessors.put(adjacent,node);
                 inDegree.put(adjacent, degree);
             }
         }
@@ -126,7 +134,20 @@ public class TopologicalOrderingAlgorithm {
         List<Node> topologicalOrder = getTopolologicalOrder();
 
         Node source = graph.getSource();
-        distances.put(source, 0);
+        distances.put(source,0);
+
+        Collections.reverse(topologicalOrder);
+
+        for (Node node: topologicalOrder){
+            Node pred = topologicalPredecessors.get(node);
+            if(pred == null)
+                continue;
+            int edgeWeight = getTopologicalNeighbor(pred,node).getWeight();
+            if (distances.get(node) > distances.get(pred) + edgeWeight){
+                distances.put(node,distances.get(pred) + edgeWeight);
+                predecessors.put(node,pred);
+            }
+        }
         JOptionPane.showMessageDialog(null,
                 topologicalOrder );
         }
