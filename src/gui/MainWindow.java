@@ -78,6 +78,7 @@ public class MainWindow extends JPanel {
         comboBox.setBackground(DrawUtils.parseColor("#DDDDDD"));
         comboBox.setPreferredSize(new Dimension(100,30));
         comboBox.setVisible(false);
+        comboBox.setToolTipText("Select an algorithm");
         buttonPanel.add(comboBox, BorderLayout.CENTER);
         buttonPanel.add(personal);
 
