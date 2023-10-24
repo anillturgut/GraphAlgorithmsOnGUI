@@ -153,6 +153,7 @@ public class MainWindow extends JPanel {
                         topologicalOrderingAlgorithm.run();
                         graphPanel.setPath(topologicalOrderingAlgorithm.getDestinationPath());
                         JOptionPane.showMessageDialog(null,
+                                "Topological Order: " + topologicalOrderingAlgorithm.getTopologicalOrderAsString() + "\n" +
                                 "Shortest Path: " + topologicalOrderingAlgorithm.getDestinationPathAsString() + "\n"
                                         + "              Total Distance: " + topologicalOrderingAlgorithm.getDestinationDistance());
 

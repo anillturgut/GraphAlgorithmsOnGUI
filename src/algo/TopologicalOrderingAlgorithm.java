@@ -18,6 +18,8 @@ public class TopologicalOrderingAlgorithm {
     private Map<Node, Node> topologicalPredecessors;
     private Map<Node, Integer> inDegree;
 
+    private List<Node> topologicalOrder;
+
     private PriorityQueue<Node> barrenNodes;
 
 
@@ -30,6 +32,7 @@ public class TopologicalOrderingAlgorithm {
         topologicalPredecessors = new HashMap<>();
         distances = new HashMap<>();
         inDegree = new HashMap<>();
+        topologicalOrder = new ArrayList<>();
 
         for(Node node : graph.getNodes()){
             distances.put(node, Integer.MAX_VALUE);
@@ -108,7 +111,6 @@ public class TopologicalOrderingAlgorithm {
 
 
     public List<Node> getTopolologicalOrder() {
-        List<Node> topologicalOrder = new ArrayList<>();
         while (!barrenNodes.isEmpty()) {
             Node node = barrenNodes.poll();
             topologicalOrder.add(node);
@@ -154,7 +156,15 @@ public class TopologicalOrderingAlgorithm {
     public List<Node> getDestinationPath() {
         return getPath(graph.getDestination());
     }
-
+    public String getTopologicalOrderAsString(){
+        String path = "";
+        List<Node> nodeList = topologicalOrder;
+        for(int i = 0; i < nodeList.toArray().length-1; i++){
+            path += nodeList.toArray()[i] + "->";
+        }
+        path += nodeList.toArray()[nodeList.toArray().length-1];
+        return path;
+    }
     public String getDestinationPathAsString(){
         String path = "";
         List<Node> nodeList = getPath(graph.getDestination());
