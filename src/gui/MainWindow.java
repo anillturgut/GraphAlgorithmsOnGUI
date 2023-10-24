@@ -150,12 +150,11 @@ public class MainWindow extends JPanel {
                     TopologicalOrderingAlgorithm topologicalOrderingAlgorithm = new TopologicalOrderingAlgorithm(graph);
                     try {
                         topologicalOrderingAlgorithm.run();
-                        /*
-                        graphPanel.setPath(bellmanFordAlgorithm.getDestinationPath());
+                        graphPanel.setPath(topologicalOrderingAlgorithm.getDestinationPath());
                         JOptionPane.showMessageDialog(null,
-                                "Shortest Path: " + bellmanFordAlgorithm.getDestinationPathAsString() + "\n"
-                                        + "              Total Distance: " + bellmanFordAlgorithm.getDestinationDistance());
-                        */
+                                "Shortest Path: " + topologicalOrderingAlgorithm.getDestinationPathAsString() + "\n"
+                                        + "              Total Distance: " + topologicalOrderingAlgorithm.getDestinationDistance());
+
                     } catch (IllegalStateException ise) {
                         JOptionPane.showMessageDialog(null, ise.getMessage());
                     } catch (OutOfMemoryError ome) {

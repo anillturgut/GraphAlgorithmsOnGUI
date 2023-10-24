@@ -136,19 +136,47 @@ public class TopologicalOrderingAlgorithm {
         Node source = graph.getSource();
         distances.put(source,0);
 
-        Collections.reverse(topologicalOrder);
-
         for (Node node: topologicalOrder){
-            Node pred = topologicalPredecessors.get(node);
-            if(pred == null)
-                continue;
-            int edgeWeight = getTopologicalNeighbor(pred,node).getWeight();
-            if (distances.get(node) > distances.get(pred) + edgeWeight){
-                distances.put(node,distances.get(pred) + edgeWeight);
-                predecessors.put(node,pred);
+            for (Edge neighbor : getNeighbors(node)) {
+                Node adjacent = getAdjacent(neighbor, node);
+                if (distances.get(adjacent) > distances.get(node) + neighbor.getWeight()){
+                    distances.put(adjacent,distances.get(node) + neighbor.getWeight());
+                    predecessors.put(adjacent,node);
+                }
             }
         }
-        JOptionPane.showMessageDialog(null,
-                topologicalOrder );
-        }
+        graph.setSolved(true);
     }
+    public Integer getDestinationDistance(){
+        return distances.get(graph.getDestination());
+    }
+
+    public List<Node> getDestinationPath() {
+        return getPath(graph.getDestination());
+    }
+
+    public String getDestinationPathAsString(){
+        String path = "";
+        List<Node> nodeList = getPath(graph.getDestination());
+        for(int i = 0; i < nodeList.toArray().length-1; i++){
+            path += nodeList.toArray()[i] + "->";
+        }
+        path += nodeList.toArray()[nodeList.toArray().length-1];
+        return path;
+    }
+    public List<Node> getPath(Node node){
+        List<Node> path = new ArrayList<>();
+
+        Node current = node;
+        path.add(current);
+        while (current!=graph.getSource()){
+            current = predecessors.get(current);
+            path.add(current);
+        }
+
+        Collections.reverse(path);
+
+        return path;
+    }
+}
+
