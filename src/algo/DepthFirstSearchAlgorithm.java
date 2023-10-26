@@ -95,12 +95,23 @@ public class DepthFirstSearchAlgorithm {
                     traversedPathDistinct.add(adjacent);
                     break;
                 }
+            }if (!isNodeAdmissible(selectedNode)){
+                marked.remove(selectedNode);
             }
-            marked.remove(selectedNode);
         }
         graph.setSolved(true);
     }
 
+    public boolean isNodeAdmissible(Node node){
+        boolean flag = false;
+        for (Edge neighbor: getNeighbors(node)){
+            Node adjacent = getAdjacent(neighbor, node);
+            if (adjacent != null && !traversedPathDistinct.contains(adjacent)){
+                flag = true;
+            }
+        }
+        return flag;
+    }
     public List<Node> getDestinationPath() {
         return traversedPath;
     }
