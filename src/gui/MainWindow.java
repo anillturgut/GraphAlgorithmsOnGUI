@@ -162,7 +162,10 @@ public class MainWindow extends JPanel {
                     } catch (OutOfMemoryError ome) {
                         JOptionPane.showMessageDialog(null, "Memory error, control it.");
                     }
-                } else {
+                } else if (comboBox.getSelectedItem() == null){
+                    JOptionPane.showMessageDialog(null, "Please select an algorithm !" );
+                }
+                else {
                     JOptionPane.showMessageDialog(null,
                             comboBox.getSelectedItem()+" algorithm has not been developed yet." );
                 }
