@@ -14,7 +14,7 @@ public class BreadthFirstSearchAlgorithm {
     private Map<Node, Integer> distances;
     private Graph graph;
     private Map<Node, Node> predecessors;
-    private PriorityQueue<Node> marked;
+    private List<Node> marked;
 
     private List<Node> traversedPath;
 
@@ -29,7 +29,7 @@ public class BreadthFirstSearchAlgorithm {
     };
     public BreadthFirstSearchAlgorithm(Graph graph){
         this.graph = graph;
-        marked = new PriorityQueue<>();
+        marked = new ArrayList<>();
         predecessors = new HashMap<>();
         distances = new HashMap<>();
         traversedPath =  new ArrayList<>();
@@ -80,18 +80,19 @@ public class BreadthFirstSearchAlgorithm {
         if(!safe) {
             throw new IllegalStateException(message);
         }
-        marked = new PriorityQueue<>(graph.getNodes().size(), new NodeComparator());
+        //marked = new PriorityQueue<>(graph.getNodes().size(), new NodeComparator());
+        marked = new ArrayList<>();
         Node source = graph.getSource();
         marked.add(source);
         traversedPathDistinct.add(source);
 
         while (!marked.isEmpty()){
 
-            Node selectedNode = marked.peek();
+            Node selectedNode = marked.get(0);
 
             for (Edge neighbor : getNeighbors(selectedNode)) {
                 Node adjacent = getAdjacent(neighbor, selectedNode);
-                if (adjacent != null && !marked.contains(adjacent)){
+                if (adjacent != null && !marked.contains(adjacent) && !traversedPath.contains(adjacent)){
                     distances.put(adjacent, neighbor.getWeight());
                     marked.add(adjacent);
                     predecessors.put(adjacent, selectedNode);
@@ -108,7 +109,6 @@ public class BreadthFirstSearchAlgorithm {
     public List<Node> getDestinationPath() {
         return traversedPath;
     }
-
     public String getDestinationPathAsString(){
         String path = "";
         List<Node> nodeList = traversedPathDistinct;

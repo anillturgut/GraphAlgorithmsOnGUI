@@ -23,6 +23,8 @@ public class GraphPanel extends JPanel implements MouseListener, MouseMotionList
     private Node hoveredNode = null;
     private Edge hoveredEdge = null;
 
+    private String comboboxSelectedItem = null;
+
     private java.util.List<Node> path = null;
 
     private Point cursor;
@@ -34,9 +36,10 @@ public class GraphPanel extends JPanel implements MouseListener, MouseMotionList
         addMouseMotionListener(this);
     }
 
-    public void setPath(List<Node> path) {
+    public void setPath(List<Node> path, String selectedItem) {
         this.path = path;
         hoveredEdge = null;
+        this.comboboxSelectedItem = selectedItem;
         repaint();
     }
 
@@ -53,7 +56,12 @@ public class GraphPanel extends JPanel implements MouseListener, MouseMotionList
         drawUtils = new DrawUtils(graphics2d);
 
         if(graph.isSolved()){
-            drawUtils.drawPath(path);
+            if (comboboxSelectedItem.equals("Bread-First-Search")){
+                drawUtils.drawBFSPath(path,graph.getEdges());
+            }else{
+                drawUtils.drawPath(path);
+            }
+
         }
 
         if(selectedNode != null && cursor != null){

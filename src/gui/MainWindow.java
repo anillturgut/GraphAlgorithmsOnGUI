@@ -113,7 +113,7 @@ public class MainWindow extends JPanel {
                     DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
                     try {
                         dijkstraAlgorithm.run();
-                        graphPanel.setPath(dijkstraAlgorithm.getDestinationPath());
+                        graphPanel.setPath(dijkstraAlgorithm.getDestinationPath(), comboBox.getSelectedItem().toString());
                         JOptionPane.showMessageDialog(null,
                                 "Shortest Path: " + dijkstraAlgorithm.getDestinationPathAsString() + "\n"
                                         + "              Total Distance: " + dijkstraAlgorithm.getDestinationDistance());
@@ -124,7 +124,7 @@ public class MainWindow extends JPanel {
                     BreadthFirstSearchAlgorithm breadthFirstSearchAlgorithm = new BreadthFirstSearchAlgorithm(graph);
                     try {
                         breadthFirstSearchAlgorithm.run();
-                        graphPanel.setPath(breadthFirstSearchAlgorithm.getDestinationPath());
+                        graphPanel.setPath(breadthFirstSearchAlgorithm.getDestinationPath(),comboBox.getSelectedItem().toString());
                         JOptionPane.showMessageDialog(null,
                                 "Traversed Path: " + breadthFirstSearchAlgorithm.getDestinationPathAsString() + "\n");
                     } catch (IllegalStateException ise) {
@@ -137,7 +137,7 @@ public class MainWindow extends JPanel {
                     try {
                         bellmanFordAlgorithm.run();
 
-                        graphPanel.setPath(bellmanFordAlgorithm.getDestinationPath());
+                        graphPanel.setPath(bellmanFordAlgorithm.getDestinationPath(),comboBox.getSelectedItem().toString());
                         JOptionPane.showMessageDialog(null,
                                 "Shortest Path: " + bellmanFordAlgorithm.getDestinationPathAsString() + "\n"
                                         + "              Total Distance: " + bellmanFordAlgorithm.getDestinationDistance());
@@ -151,7 +151,7 @@ public class MainWindow extends JPanel {
                     TopologicalOrderingAlgorithm topologicalOrderingAlgorithm = new TopologicalOrderingAlgorithm(graph);
                     try {
                         topologicalOrderingAlgorithm.run();
-                        graphPanel.setPath(topologicalOrderingAlgorithm.getDestinationPath());
+                        graphPanel.setPath(topologicalOrderingAlgorithm.getDestinationPath(),comboBox.getSelectedItem().toString());
                         JOptionPane.showMessageDialog(null,
                                 "Topological Order: " + topologicalOrderingAlgorithm.getTopologicalOrderAsString() + "\n" +
                                 "Shortest Path: " + topologicalOrderingAlgorithm.getDestinationPathAsString() + "\n"

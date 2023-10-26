@@ -66,6 +66,22 @@ public class DrawUtils {
         g.fillOval(x-rad, y-rad, 2*rad, 2*rad);
         drawWeightText(String.valueOf(edge.getWeight()), x, y);
     }
+    public void drawBFSPath(java.util.List<Node> path, List<Edge> traversedEdges) {
+        List<Edge> edges = new ArrayList<>();
+        List<String> edgeLabels = new ArrayList<>();
+        for (Edge edge: traversedEdges){
+            edgeLabels.add(edge.toString());
+        }
+        for(int i = 0; i < path.size()-1; i++) {
+            edges.add(new Edge(path.get(i), path.get(i+1)));
+        }
+
+        for(Edge edge : edges) {
+            if(edgeLabels.contains(edge.toString())){
+                drawPath(edge);
+            }
+        }
+    }
 
     public void drawPath(java.util.List<Node> path) {
         List<Edge> edges = new ArrayList<>();
