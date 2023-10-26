@@ -1,9 +1,6 @@
 package gui;
 
-import algo.BellmanFordAlgorithm;
-import algo.BreadthFirstSearchAlgorithm;
-import algo.DijkstraAlgorithm;
-import algo.TopologicalOrderingAlgorithm;
+import algo.*;
 import models.Graph;
 
 import javax.imageio.ImageIO;
@@ -132,7 +129,19 @@ public class MainWindow extends JPanel {
                     } catch (OutOfMemoryError ome) {
                         JOptionPane.showMessageDialog(null, "Memory error, control it.");
                     }
-                }else if (comboBox.getSelectedItem() == "Bellman-Ford") {
+                }else if (comboBox.getSelectedItem() == "Depth-First-Search"){
+                    DepthFirstSearchAlgorithm depthFirstSearchAlgorithm = new DepthFirstSearchAlgorithm(graph);
+                    try {
+                        depthFirstSearchAlgorithm.run();
+                        graphPanel.setPath(depthFirstSearchAlgorithm.getDestinationPath(),comboBox.getSelectedItem().toString());
+                        JOptionPane.showMessageDialog(null,
+                                "Traversed Path: " + depthFirstSearchAlgorithm.getDestinationPathAsString() + "\n");
+                    } catch (IllegalStateException ise) {
+                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                    } catch (OutOfMemoryError ome) {
+                        JOptionPane.showMessageDialog(null, "Memory error, control it.");
+                    }
+                } else if (comboBox.getSelectedItem() == "Bellman-Ford") {
                     BellmanFordAlgorithm bellmanFordAlgorithm = new BellmanFordAlgorithm(graph);
                     try {
                         bellmanFordAlgorithm.run();
@@ -207,7 +216,7 @@ public class MainWindow extends JPanel {
         @Override
         public void actionPerformed(ActionEvent event) {
             if (firstTimeSwitch) {
-                String[] selection = {"Dijkstra's", "Bread-First-Search", "Topological-Ordering", "Bellman-Ford"};
+                String[] selection = {"Dijkstra's", "Bread-First-Search","Depth-First-Search", "Topological-Ordering", "Bellman-Ford"};
                 for (int index = 0; index < selection.length; index++) {
                     comboBox.addItem(selection[index]);
                 }

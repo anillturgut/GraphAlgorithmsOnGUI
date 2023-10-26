@@ -56,7 +56,7 @@ public class GraphPanel extends JPanel implements MouseListener, MouseMotionList
         drawUtils = new DrawUtils(graphics2d);
 
         if(graph.isSolved()){
-            if (comboboxSelectedItem.equals("Bread-First-Search")){
+            if (comboboxSelectedItem.equals("Bread-First-Search") || comboboxSelectedItem.equals("Depth-First-Search")){
                 drawUtils.drawBFSPath(path,graph.getEdges());
             }else{
                 drawUtils.drawPath(path);
