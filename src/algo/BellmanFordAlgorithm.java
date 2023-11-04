@@ -15,15 +15,18 @@ public class BellmanFordAlgorithm {
     private Map<Node, Node> predecessors;
     private Map<Node, Integer> distances;
 
+    private  int maxValue;
+
     private boolean done;
 
     public BellmanFordAlgorithm(Graph graph){
         this.graph = graph;
         predecessors = new HashMap<>();
         distances = new HashMap<>();
+        this.maxValue = 50000;
 
         for(Node node : graph.getNodes()){
-            distances.put(node, Integer.MAX_VALUE);
+            distances.put(node, maxValue);
         }
 
         safe = evaluate();
@@ -87,7 +90,7 @@ public class BellmanFordAlgorithm {
     public boolean isNegativeCycleDetected(){
         boolean flag = false;
         for(Edge edge: graph.getEdges()){
-            if(distances.get(edge.getNodeOne())  != Integer.MAX_VALUE &&
+            if(distances.get(edge.getNodeOne())  != maxValue &&
                     (distances.get(edge.getNodeTwo()) > distances.get(edge.getNodeOne()) + edge.getWeight())){
                 flag = true;
             }
