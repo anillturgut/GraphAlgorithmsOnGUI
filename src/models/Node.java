@@ -8,6 +8,9 @@ public class Node {
     private Point coord = new Point();
     private int id;
     private java.util.List<Node> path;
+    private Map<Node, Integer> distancesToAllNodes;
+
+    private Map<Node, Node> predecessorFW;
 
     public Node(){}
 
@@ -49,6 +52,22 @@ public class Node {
 
     public int getId(){
         return id;
+    }
+
+    public Map<Node, Integer> getDistancesToAllNodes() {
+        return distancesToAllNodes;
+    }
+
+    public void setDistancesToAllNodes(Map<Node, Integer> distancesToAllNodes) {
+        this.distancesToAllNodes = distancesToAllNodes;
+    }
+
+    public Map<Node, Node> getPredecessorFW() {
+        return predecessorFW;
+    }
+
+    public void setPredecessorFW(Map<Node, Node> predecessorFW) {
+        this.predecessorFW = predecessorFW;
     }
 
     @Override

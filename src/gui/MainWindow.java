@@ -156,7 +156,17 @@ public class MainWindow extends JPanel {
                     } catch (OutOfMemoryError ome) {
                         JOptionPane.showMessageDialog(null, "Memory error, control it.");
                     }
-                }else if (comboBox.getSelectedItem() == "Topological-Ordering") {
+                }else if (comboBox.getSelectedItem() == "Floyd-Warshall") {
+                    FloydWarshallAlgorithm floydWarshallAlgorithm = new FloydWarshallAlgorithm(graph);
+                    try {
+                        floydWarshallAlgorithm.run();
+                        floydWarshallAlgorithm.getDistanceMatrix();
+                    } catch (IllegalStateException ise) {
+                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                    } catch (OutOfMemoryError ome) {
+                        JOptionPane.showMessageDialog(null, "Memory error, control it.");
+                    }
+                } else if (comboBox.getSelectedItem() == "Topological-Ordering") {
                     TopologicalOrderingAlgorithm topologicalOrderingAlgorithm = new TopologicalOrderingAlgorithm(graph);
                     try {
                         topologicalOrderingAlgorithm.run();
@@ -216,7 +226,8 @@ public class MainWindow extends JPanel {
         @Override
         public void actionPerformed(ActionEvent event) {
             if (firstTimeSwitch) {
-                String[] selection = {"Dijkstra's", "Bread-First-Search","Depth-First-Search", "Topological-Ordering", "Bellman-Ford"};
+                String[] selection = {"Dijkstra's", "Bread-First-Search","Depth-First-Search",
+                        "Topological-Ordering", "Bellman-Ford", "Floyd-Warshall"};
                 for (int index = 0; index < selection.length; index++) {
                     comboBox.addItem(selection[index]);
                 }
