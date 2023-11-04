@@ -110,7 +110,7 @@ public class TopologicalOrderingAlgorithm {
     }
 
 
-    public List<Node> getTopolologicalOrder() {
+    public List<Node> getTopologicalOrder() {
         while (!barrenNodes.isEmpty()) {
             Node node = barrenNodes.poll();
             topologicalOrder.add(node);
@@ -133,7 +133,7 @@ public class TopologicalOrderingAlgorithm {
         }
         barrenNodes = new PriorityQueue<>(graph.getNodes().size(), new NodeComparator());
         initializeAlgorithm();
-        List<Node> topologicalOrder = getTopolologicalOrder();
+        List<Node> topologicalOrder = getTopologicalOrder();
 
         Node source = graph.getSource();
         distances.put(source,0);
