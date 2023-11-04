@@ -106,6 +106,9 @@ public class Graph {
         for (Edge edge : delete){
             edges.remove(edge);
         }
+        if (node.equals(destination)){
+            destination = null;
+        }
         nodes.remove(node);
     }
 

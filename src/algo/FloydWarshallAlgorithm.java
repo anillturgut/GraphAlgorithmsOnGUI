@@ -141,5 +141,27 @@ public class FloydWarshallAlgorithm {
         JOptionPane.showMessageDialog(null, panel,
                 "Shortest Path Distances From Each Node", JOptionPane.PLAIN_MESSAGE);
     }
+    public Integer getDestinationDistance(){
+        return distances.get(graph.getDestination());
+    }
+
+    public List<Node> getDestinationPath() {
+        return getPath(graph.getSource(),graph.getDestination());
+    }
+
+    public List<Node> getPath(Node sourceNode, Node destinationNode){
+        List<Node> path = new ArrayList<>();
+
+        Node current = destinationNode;
+        path.add(current);
+        while (current!=graph.getSource()){
+            current = sourceNode.getPredecessorFW().get(current);
+            path.add(current);
+        }
+
+        Collections.reverse(path);
+
+        return path;
+    }
 
 }

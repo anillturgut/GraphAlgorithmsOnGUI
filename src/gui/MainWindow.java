@@ -161,11 +161,17 @@ public class MainWindow extends JPanel {
                     try {
                         floydWarshallAlgorithm.run();
                         floydWarshallAlgorithm.getDistanceMatrix();
+                        if (graph.getDestination() != null){
+                            graphPanel.setPath(floydWarshallAlgorithm.getDestinationPath(),comboBox.getSelectedItem().toString());
+                        }else{
+                            JOptionPane.showMessageDialog(null,
+                                    "Since there is no destination defined, path is not seen.");
+                        }
                     } catch (IllegalStateException ise) {
                         JOptionPane.showMessageDialog(null, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
                         JOptionPane.showMessageDialog(null, "Memory error, control it.");
-                    }
+                    }catch (NullPointerException npe){}
                 } else if (comboBox.getSelectedItem() == "Topological-Ordering") {
                     TopologicalOrderingAlgorithm topologicalOrderingAlgorithm = new TopologicalOrderingAlgorithm(graph);
                     try {
