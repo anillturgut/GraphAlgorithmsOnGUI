@@ -136,6 +136,14 @@ public class AugmentingPathAlgorithm {
             }
         }
         return minValue;
-
+    }
+    public String getResidualCapacitiesAsString(List<Edge> edges){
+        String residualCapacities = "";
+        for(Edge edge: edges){
+            String edgeCapacity = edge.toString() + " :  (";
+            edgeCapacity += edge.getResidual() + "/" + edge.getWeight() + ")";
+            residualCapacities += edgeCapacity + "\n";
+        }
+        return residualCapacities;
     }
 }

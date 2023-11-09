@@ -179,7 +179,9 @@ public class MainWindow extends JPanel {
                         JOptionPane.showMessageDialog(null,
                                 "Maximum flow that can be sent from "+graph.getSource().toString() +
                                         " to " + graph.getDestination().toString() + " : "
-                                        + augmentingPathAlgorithm.getMaxFlow());
+                                        + augmentingPathAlgorithm.getMaxFlow() + "\n" +
+                                        "Edge's residual/original capacities: " + "\n" +
+                                        augmentingPathAlgorithm.getResidualCapacitiesAsString(graph.getEdges()));
                     } catch (IllegalStateException ise) {
                         JOptionPane.showMessageDialog(null, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
