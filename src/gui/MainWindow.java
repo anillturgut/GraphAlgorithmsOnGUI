@@ -195,6 +195,8 @@ public class MainWindow extends JPanel {
                                 "Maximum flow that can be sent from "+graph.getSource().toString() +
                                         " to " + graph.getDestination().toString() + " : "
                                         + capacityScalingAlgorithm.getMaxFlow() + "\n" +
+                                        "Scaling Phases (Δ) : " +
+                                        capacityScalingAlgorithm.getScalingPhasesAsString() + "\n" +
                                         "Edge's residual/original capacities: " + "\n" +
                                         capacityScalingAlgorithm.getResidualCapacitiesAsString(graph.getEdges()));
                     } catch (IllegalStateException ise) {

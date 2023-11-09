@@ -22,6 +22,8 @@ public class CapacityScalingAlgorithm {
 
     private int scalingPhaseDelta;
 
+    private List<Integer> scalingPhases;
+
     private int MaxFlow;
 
     public CapacityScalingAlgorithm(Graph graph){
@@ -29,6 +31,7 @@ public class CapacityScalingAlgorithm {
         predecessors = new HashMap<>();
         labeled = new ArrayList<>();
         marked = new ArrayList<>();
+        scalingPhases = new ArrayList<>();
         for (Edge edge: graph.getEdges()){
             edge.setResidual(edge.getWeight());
         }
@@ -60,7 +63,17 @@ public class CapacityScalingAlgorithm {
         List<Edge> neighbors = new ArrayList<>();
 
         for(Edge edge : graph.getEdges()){
-            if(edge.getNodeOne()==node && edge.getWeight() >= scalingPhaseDelta)
+            if(edge.getNodeOne()==node)
+                neighbors.add(edge);
+        }
+
+        return neighbors;
+    }
+    private List<Edge> getScalePhaseNeighbors(Node node, int delta) {
+        List<Edge> neighbors = new ArrayList<>();
+
+        for(Edge edge : graph.getEdges()){
+            if(edge.getNodeOne()==node && edge.getWeight() >= delta)
                 neighbors.add(edge);
         }
 
@@ -87,6 +100,7 @@ public class CapacityScalingAlgorithm {
         int delta = (int) Math.pow(2,scalingPhaseDelta);
 
         while (delta >= 1 ){
+            scalingPhases.add(delta);
             while(labeled.contains(destination)){
                 labeled.clear();
                 predecessors.clear();
@@ -96,7 +110,7 @@ public class CapacityScalingAlgorithm {
                 while (!marked.isEmpty() && !labeled.contains(destination)){
                     Node selectedNode = marked.get(0);
                     marked.remove(selectedNode);
-                    for (Edge neighbor : getNeighbors(selectedNode)) {
+                    for (Edge neighbor : getScalePhaseNeighbors(selectedNode,delta)) {
                         if(neighbor.getResidual() > 0){
                             Node adjacent = getAdjacent(neighbor, selectedNode);
                             if (!labeled.contains(adjacent)){
@@ -111,6 +125,7 @@ public class CapacityScalingAlgorithm {
                     AugmentPath(predecessors);
                 }
             }
+            labeled.add(destination);
             delta = delta / 2;
         }
         graph.setSolved(true);
@@ -160,6 +175,7 @@ public class CapacityScalingAlgorithm {
         }
         return maxValue;
     }
+    public List<Integer> getScalingPhasesAsString(){ return scalingPhases; }
     public String getResidualCapacitiesAsString(List<Edge> edges){
         String residualCapacities = "";
         for(Edge edge: edges){
