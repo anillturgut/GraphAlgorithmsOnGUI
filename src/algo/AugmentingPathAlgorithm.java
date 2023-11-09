@@ -18,12 +18,10 @@ public class AugmentingPathAlgorithm {
     private Map<Node, Node> predecessors;
 
     private int MaxFlow;
-    private Map<Node, Integer> distances;
 
     public AugmentingPathAlgorithm(Graph graph){
         this.graph = graph;
         predecessors = new HashMap<>();
-        distances = new HashMap<>();
         labeled = new ArrayList<>();
         marked = new ArrayList<>();
         for (Edge edge: graph.getEdges()){
