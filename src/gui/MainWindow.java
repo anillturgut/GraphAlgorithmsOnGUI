@@ -172,6 +172,19 @@ public class MainWindow extends JPanel {
                     } catch (OutOfMemoryError ome) {
                         JOptionPane.showMessageDialog(null, "Memory error, control it.");
                     }catch (NullPointerException npe){}
+                }else if (comboBox.getSelectedItem() == "Augmenting-Path") {
+                    AugmentingPathAlgorithm augmentingPathAlgorithm = new AugmentingPathAlgorithm(graph);
+                    try {
+                        augmentingPathAlgorithm.run();
+                        JOptionPane.showMessageDialog(null,
+                                "Maximum flow that can be sent from "+graph.getSource().toString() +
+                                        " to " + graph.getDestination().toString() + " : "
+                                        + augmentingPathAlgorithm.getMaxFlow());
+                    } catch (IllegalStateException ise) {
+                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                    } catch (OutOfMemoryError ome) {
+                        JOptionPane.showMessageDialog(null, "Memory error, control it.");
+                    }catch (NullPointerException npe){}
                 } else if (comboBox.getSelectedItem() == "Topological-Ordering") {
                     TopologicalOrderingAlgorithm topologicalOrderingAlgorithm = new TopologicalOrderingAlgorithm(graph);
                     try {
@@ -233,7 +246,7 @@ public class MainWindow extends JPanel {
         public void actionPerformed(ActionEvent event) {
             if (firstTimeSwitch) {
                 String[] selection = {"Dijkstra's", "Bread-First-Search","Depth-First-Search",
-                        "Topological-Ordering", "Bellman-Ford", "Floyd-Warshall"};
+                        "Topological-Ordering", "Bellman-Ford", "Floyd-Warshall", "Augmenting-Path"};
                 for (int index = 0; index < selection.length; index++) {
                     comboBox.addItem(selection[index]);
                 }
