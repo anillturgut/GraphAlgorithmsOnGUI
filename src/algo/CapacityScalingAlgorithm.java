@@ -73,7 +73,7 @@ public class CapacityScalingAlgorithm {
         List<Edge> neighbors = new ArrayList<>();
 
         for(Edge edge : graph.getEdges()){
-            if(edge.getNodeOne()==node && edge.getWeight() >= delta)
+            if(edge.getNodeOne()==node && edge.getResidual() >= delta)
                 neighbors.add(edge);
         }
 
