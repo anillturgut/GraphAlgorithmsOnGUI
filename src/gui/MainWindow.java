@@ -41,7 +41,7 @@ public class MainWindow extends JPanel {
         JLabel info = new JLabel("Graph & Network Algorithm Visualiser");
         info.setForeground(new Color(230, 220, 250));
         JPanel panel = new JPanel();
-        panel.setBackground(new Color(130, 50, 250));
+        panel.setBackground(new Color(0, 0, 204));
         panel.add(info);
         panel.setBorder(new EmptyBorder(5, 5, 5, 5));
         add(panel, BorderLayout.NORTH);
