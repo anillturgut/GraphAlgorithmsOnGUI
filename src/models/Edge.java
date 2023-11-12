@@ -5,6 +5,7 @@ public class Edge {
     private Node two;
     private int weight = 1;
     private int residual;
+    private int flow;
 
     public Edge(Node one, Node two){
         this.one = one;
@@ -42,6 +43,15 @@ public class Edge {
     public void setResidual(int residual) {
         this.residual = residual;
     }
+
+    public int getFlow() {
+        return flow;
+    }
+
+    public void setFlow(int flow) {
+        this.flow = flow;
+    }
+
     @Override
     public String toString() {
         return "Edge ~ "

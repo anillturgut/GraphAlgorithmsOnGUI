@@ -9,8 +9,8 @@ public class Node {
     private int id;
     private java.util.List<Node> path;
     private Map<Node, Integer> distancesToAllNodes;
-
     private Map<Node, Node> predecessorFW;
+    private int excess;
 
     public Node(){}
 
@@ -68,6 +68,21 @@ public class Node {
 
     public void setPredecessorFW(Map<Node, Node> predecessorFW) {
         this.predecessorFW = predecessorFW;
+    }
+
+    public int getExcess() {
+        return excess;
+    }
+
+    public void setExcess(int excess) {
+        this.excess = excess;
+    }
+
+    public Edge addEdge(Node two, int flow, int capacity){
+        Edge edge = new Edge(this, two);
+        edge.setFlow(flow);
+        edge.setWeight(capacity);
+        return edge;
     }
 
     @Override

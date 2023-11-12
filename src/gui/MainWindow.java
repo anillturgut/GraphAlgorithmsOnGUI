@@ -204,6 +204,19 @@ public class MainWindow extends JPanel {
                     } catch (OutOfMemoryError ome) {
                         JOptionPane.showMessageDialog(null, "Memory error, control it.");
                     }catch (NullPointerException npe){}
+                }else if (comboBox.getSelectedItem() == "PreFlow-Push") {
+                    PreFlowPushAlgorithm preflowPushAlgorithm = new PreFlowPushAlgorithm(graph);
+                    try {
+                        preflowPushAlgorithm.run();
+                        JOptionPane.showMessageDialog(null,
+                                "Maximum flow that can be sent from "+graph.getSource().toString() +
+                                        " to " + graph.getDestination().toString() + " : "
+                                        + preflowPushAlgorithm.getMaxFlow(graph.getDestination()));
+                    } catch (IllegalStateException ise) {
+                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                    } catch (OutOfMemoryError ome) {
+                        JOptionPane.showMessageDialog(null, "Memory error, control it.");
+                    }catch (NullPointerException npe){}
                 } else if (comboBox.getSelectedItem() == "Topological-Ordering") {
                     TopologicalOrderingAlgorithm topologicalOrderingAlgorithm = new TopologicalOrderingAlgorithm(graph);
                     try {
@@ -265,7 +278,8 @@ public class MainWindow extends JPanel {
         public void actionPerformed(ActionEvent event) {
             if (firstTimeSwitch) {
                 String[] selection = {"Dijkstra's", "Bread-First-Search","Depth-First-Search",
-                        "Topological-Ordering", "Bellman-Ford", "Floyd-Warshall", "Augmenting-Path","Capacity-Scaling"};
+                        "Topological-Ordering", "Bellman-Ford", "Floyd-Warshall", "Augmenting-Path",
+                        "Capacity-Scaling", "PreFlow-Push"};
                 for (int index = 0; index < selection.length; index++) {
                     comboBox.addItem(selection[index]);
                 }
