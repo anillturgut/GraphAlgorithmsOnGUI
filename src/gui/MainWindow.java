@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.io.File;
 
 public class MainWindow extends JPanel {
 
@@ -61,15 +62,19 @@ public class MainWindow extends JPanel {
         setupIcon(algorithm, "algorithm");
         algorithm.setToolTipText("Click to select an algorithm to solve the network problem");
         algorithm.addActionListener(new ButtonListener());
-        final JButton personal = new JButton();
+        JButton personal = new JButton();
         setupIcon(personal, "boun");
         personal.setToolTipText("My Information");
+        final JButton importExcel = new JButton();
+        setupIcon(importExcel, "excel");
+        importExcel.setToolTipText("Import excel to draw network");
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(DrawUtils.parseColor("#DDDDDD"));
         buttonPanel.add(reset);
         buttonPanel.add(run);
         buttonPanel.add(info);
+        buttonPanel.add(importExcel);
         buttonPanel.add(algorithm, BorderLayout.BEFORE_FIRST_LINE);
         comboBox = new JComboBox<>();
         comboBox.setBackground(DrawUtils.parseColor("#DDDDDD"));
@@ -252,6 +257,24 @@ public class MainWindow extends JPanel {
                                 "Industrial Engineering MSc Student\n" +
                                 "Bogazici University\n\n" +
                                 "GitHub: https://github.com/anillturgut");
+            }
+        });
+
+        importExcel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+
+                // Show open dialog; this method does not return until the dialog is closed
+                int result = fileChooser.showOpenDialog(MainWindow.this);
+
+                // Check if the user chose a file
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    JOptionPane.showMessageDialog(null,
+                            "Selected File Path: " + selectedFile.toString());
+                    // Do something with the selected file, e.g., open or process it
+                }
             }
         });
 
