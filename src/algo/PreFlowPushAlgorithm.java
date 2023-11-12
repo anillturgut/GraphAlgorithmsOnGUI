@@ -168,4 +168,21 @@ public class PreFlowPushAlgorithm {
         edge.getNodeTwo().addEdge(edge.getNodeOne(),-flow,0);
     }
     public int getMaxFlow(Node destination){ return destination.getExcess();}
+
+    public String getEdgeFlowAsString(List<Edge> edges){
+        String edgeFlows = "";
+        for(Edge edge : edges){
+            String flow = edge.toString() + " :  (";
+            flow += edge.getFlow() + "/" + edge.getWeight() + ")";
+            if (edge.getFlow() == edge.getWeight()){
+                flow += "   - Full";
+            }else if (!(edge.getFlow() == edge.getWeight()) && edge.getFlow() > 0){
+                flow += "   - Partially used";
+            } else {
+                flow += "   - Not used";
+            }
+            edgeFlows += flow + "\n";
+        }
+        return edgeFlows;
+    }
 }

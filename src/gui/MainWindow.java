@@ -211,7 +211,9 @@ public class MainWindow extends JPanel {
                         JOptionPane.showMessageDialog(null,
                                 "Maximum flow that can be sent from "+graph.getSource().toString() +
                                         " to " + graph.getDestination().toString() + " : "
-                                        + preflowPushAlgorithm.getMaxFlow(graph.getDestination()));
+                                        + preflowPushAlgorithm.getMaxFlow(graph.getDestination()) + "\n" +
+                                        "Edge's flow/capacity information : " + "\n" +
+                                        preflowPushAlgorithm.getEdgeFlowAsString(graph.getEdges()));
                     } catch (IllegalStateException ise) {
                         JOptionPane.showMessageDialog(null, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
