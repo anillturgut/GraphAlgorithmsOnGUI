@@ -139,9 +139,17 @@ public class AugmentingPathAlgorithm {
     }
     public String getResidualCapacitiesAsString(List<Edge> edges){
         String residualCapacities = "";
+        edges.sort(Comparator.comparing(Edge::toString));
         for(Edge edge: edges){
             String edgeCapacity = edge.toString() + " :  (";
             edgeCapacity += edge.getResidual() + "/" + edge.getWeight() + ")";
+            if (edge.getResidual() == 0){
+                edgeCapacity += "   - Full";
+            }else if (!(edge.getResidual() == edge.getWeight()) && edge.getResidual() > 0){
+                edgeCapacity += "   - Partially used";
+            } else {
+                edgeCapacity += "   - Not used";
+            }
             residualCapacities += edgeCapacity + "\n";
         }
         return residualCapacities;

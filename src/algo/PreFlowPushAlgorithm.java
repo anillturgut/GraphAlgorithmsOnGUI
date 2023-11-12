@@ -171,6 +171,7 @@ public class PreFlowPushAlgorithm {
 
     public String getEdgeFlowAsString(List<Edge> edges){
         String edgeFlows = "";
+        edges.sort(Comparator.comparing(Edge::toString));
         for(Edge edge : edges){
             String flow = edge.toString() + " :  (";
             flow += edge.getFlow() + "/" + edge.getWeight() + ")";
