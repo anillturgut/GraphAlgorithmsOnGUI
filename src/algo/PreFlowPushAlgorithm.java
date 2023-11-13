@@ -185,16 +185,18 @@ public class PreFlowPushAlgorithm {
         String edgeFlows = "";
         edges.sort(Comparator.comparing(Edge::toString));
         for(Edge edge : edges){
-            String flow = edge.toString() + " :  (";
-            flow += edge.getFlow() + "/" + edge.getWeight() + ")";
-            if (edge.getFlow() == edge.getWeight()){
-                flow += "   - Full";
-            }else if (!(edge.getFlow() == edge.getWeight()) && edge.getFlow() > 0){
-                flow += "   - Partially used";
-            } else {
-                flow += "   - Not used";
+            if (edge.getFlow() >= 0){
+                String flow = edge.toString() + " :  (";
+                flow += edge.getFlow() + "/" + edge.getWeight() + ")";
+                if (edge.getFlow() == edge.getWeight()){
+                    flow += "   - Full";
+                }else if (!(edge.getFlow() == edge.getWeight()) && edge.getFlow() > 0){
+                    flow += "   - Partially used";
+                } else {
+                    flow += "   - Not used";
+                }
+                edgeFlows += flow + "\n";
             }
-            edgeFlows += flow + "\n";
         }
         return edgeFlows;
     }
