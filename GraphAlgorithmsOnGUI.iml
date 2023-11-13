@@ -30,6 +30,7 @@
           <root url="jar://$MODULE_DIR$/src/lib/slf4j-api-1.7.36.jar!/" />
           <root url="jar://$MODULE_DIR$/src/lib/SparseBitSet-1.2.jar!/" />
           <root url="jar://$MODULE_DIR$/src/lib/xmlbeans-5.1.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/lib/log4j-core-2.21.1.jar!/" />
         </CLASSES>
         <JAVADOC>
           <root url="jar://$MODULE_DIR$/src/lib/poi-javadoc-5.2.3.jar!/" />
