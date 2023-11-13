@@ -278,7 +278,7 @@ public class MainWindow extends JPanel {
                     JOptionPane.showMessageDialog(null,
                             "Selected File Path: " + selectedFile.toString());*/
                     // Do something with the selected file, e.g., open or process it
-                    ExcelImport excelImport = new ExcelImport(filePath.toString());
+                    ExcelImport excelImport = new ExcelImport(graph,graphPanel,filePath.toString());
                     excelImport.getExcelFromPath();
                 }
             }
