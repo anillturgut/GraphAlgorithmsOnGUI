@@ -120,11 +120,16 @@ public class PreFlowPushAlgorithm {
             if ((e.getFlow() != e.getWeight()) && (distances.get(e.getNodeTwo()) < minDistance)) {
                 minDistance = distances.get(e.getNodeTwo());
                 distances.put(n, minDistance + 1);
-            } else if (n.getExcess() > 0 && !activeEdgeFromNode(n)){
+            }    else if (n.getExcess() > 0 && !activeEdgeFromNode(n)){
                 n.setExcess(0);
             }
         }
     }
+    /*
+    else if (n.getExcess() > 0 && !activeEdgeFromNode(n)){
+                n.setExcess(0);
+            }
+     */
     /*
      * Active Node:
      * - A node (excluding source and sink) with excess flow
@@ -168,7 +173,7 @@ public class PreFlowPushAlgorithm {
                 e.setFlow(edgeFlow);
             }
         }
-        edge.getNodeTwo().addEdge(edge.getNodeOne(),-flow,0);
+        graph.addEdgePreFlow(edge.getNodeTwo().addEdge(edge.getNodeOne(),-flow,0));
     }
     private void controlEdgeIsActive(Edge edge){
         if(edge.getWeight() == edge.getFlow())

@@ -35,6 +35,9 @@ public class Edge {
     public boolean equals(Edge edge) {
         return (one ==edge.one && two ==edge.two) || (one ==edge.two && two ==edge.one) ;
     }
+    public boolean equalsPreFlow(Edge edge) {
+        return (one ==edge.one && two ==edge.two) ;
+    }
 
     public int getResidual() {
         return residual;

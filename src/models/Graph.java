@@ -95,6 +95,17 @@ public class Graph {
         if(!added)
             edges.add(new_edge);
     }
+    public void addEdgePreFlow(Edge new_edge){
+        boolean added = false;
+        for(Edge edge : edges){
+            if(edge.equalsPreFlow(new_edge)){
+                added = true;
+                break;
+            }
+        }
+        if(!added)
+            edges.add(new_edge);
+    }
 
     public void deleteNode(Node node){
         List<Edge> delete = new ArrayList<>();
