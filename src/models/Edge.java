@@ -6,7 +6,7 @@ public class Edge {
     private int weight = 1;
     private int residual;
     private int flow;
-
+    private boolean isActive = true;
     public Edge(Node one, Node two){
         this.one = one;
         this.two = two;
@@ -50,6 +50,14 @@ public class Edge {
 
     public void setFlow(int flow) {
         this.flow = flow;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     @Override

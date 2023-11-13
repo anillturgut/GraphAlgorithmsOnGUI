@@ -103,6 +103,7 @@ public class PreFlowPushAlgorithm {
                 flowEdge += flow;
                 e.setFlow(flowEdge);
                 updateReverseEdge(e, flow);
+                controlEdgeIsActive(e);
                 return true;
             }
         }
@@ -119,6 +120,8 @@ public class PreFlowPushAlgorithm {
             if ((e.getFlow() != e.getWeight()) && (distances.get(e.getNodeTwo()) < minDistance)) {
                 minDistance = distances.get(e.getNodeTwo());
                 distances.put(n, minDistance + 1);
+            } else if (n.getExcess() > 0 && !activeEdgeFromNode(n)){
+                n.setExcess(0);
             }
         }
     }
@@ -167,6 +170,10 @@ public class PreFlowPushAlgorithm {
         }
         edge.getNodeTwo().addEdge(edge.getNodeOne(),-flow,0);
     }
+    private void controlEdgeIsActive(Edge edge){
+        if(edge.getWeight() == edge.getFlow())
+            edge.setActive(false);
+    }
     public int getMaxFlow(Node destination){ return destination.getExcess();}
 
     public String getEdgeFlowAsString(List<Edge> edges){
@@ -185,5 +192,14 @@ public class PreFlowPushAlgorithm {
             edgeFlows += flow + "\n";
         }
         return edgeFlows;
+    }
+    public boolean activeEdgeFromNode(Node n){
+        boolean flag = false;
+        for (Edge edge : getNeighbors(n)){
+            if (edge.isActive()){
+                flag = true;
+            }
+        }
+        return flag;
     }
 }
