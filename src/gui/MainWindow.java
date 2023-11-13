@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.IOException;
 import java.io.File;
 
@@ -267,6 +268,9 @@ public class MainWindow extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
+
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel Files", "xls", "xlsx");
+                fileChooser.setFileFilter(filter);
 
                 // Show open dialog; this method does not return until the dialog is closed
                 int result = fileChooser.showOpenDialog(MainWindow.this);
