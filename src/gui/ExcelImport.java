@@ -68,7 +68,7 @@ public class ExcelImport {
 
     public void createNodeFromExcel(){
         int x = 4200;
-        int y = 180;
+        int y = 250;
         int ratio = 0;
         for (String str : nodeNames){
             int id = Character.getNumericValue(str.charAt(str.length() - 1));
@@ -77,10 +77,10 @@ public class ExcelImport {
             graph.addNode(node);
             if (ratio % 2 == 0){
                 x+=150;
-                y+=150;
+                y=400;
             }else{
                 x+=180;
-                y-=150;
+                y=100;
             }
             ratio++;
         }
