@@ -42,6 +42,7 @@ public class ExcelImport {
             Workbook workbook = WorkbookFactory.create(fileInputStream);
 
             Sheet sheet = workbook.getSheetAt(0);
+            graphPanel.reset();
 
             // Add column headers to the table model
             Row headerRow = sheet.getRow(0);
