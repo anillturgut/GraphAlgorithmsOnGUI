@@ -121,7 +121,7 @@ public class DrawUtils {
         drawBaseEdge(edge);
         drawWeight(edge);
     }
-    public void drawArrow(Graphics g1, int x1, int y1, int x2, int y2) {
+    public void drawArrow(Graphics g1, Edge edge, int x1, int y1, int x2, int y2) {
         Graphics2D g = (Graphics2D) g1.create();
 
         double dx = x2 - x1, dy = y2 - y1;
@@ -131,17 +131,19 @@ public class DrawUtils {
         at.concatenate(AffineTransform.getRotateInstance(angle));
         g.transform(at);
 
-        // Draw horizontal arrow starting in (0, 0)
-        g.drawLine(0, 0, len, 0);
-        g.fillPolygon(new int[] {len, len-ARR_SIZE, len-ARR_SIZE, len},
-                new int[] {0, -ARR_SIZE, ARR_SIZE, 0}, 4);
+        if (!edge.isBackward()){
+            // Draw horizontal arrow starting in (0, 0)
+            g.drawLine(0, 0, len, 0);
+            g.fillPolygon(new int[] {len, len-ARR_SIZE, len-ARR_SIZE, len},
+                    new int[] {0, -ARR_SIZE, ARR_SIZE, 0}, 4);
+        }
     }
     private void drawBaseEdge(Edge edge){
         Point from = edge.getNodeOne().getCoord();
         Point to = edge.getNodeTwo().getCoord();
         g.setStroke(new BasicStroke(3));
        // g.drawLine(from.x, from.y, to.x, to.y);
-        drawArrow(g,from.x,from.y,to.x,to.y);
+        drawArrow(g,edge,from.x,from.y,to.x,to.y);
     }
 
     public void drawHalo(Node node){

@@ -7,6 +7,8 @@ public class Edge {
     private int residual;
     private int flow;
     private boolean isActive = true;
+
+    private boolean isBackward = false;
     public Edge(Node one, Node two){
         this.one = one;
         this.two = two;
@@ -61,6 +63,14 @@ public class Edge {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public boolean isBackward() {
+        return isBackward;
+    }
+
+    public void setBackward(boolean backward) {
+        isBackward = backward;
     }
 
     @Override

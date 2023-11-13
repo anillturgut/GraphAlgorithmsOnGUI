@@ -103,8 +103,10 @@ public class Graph {
                 break;
             }
         }
-        if(!added)
+        if(!added){
+            new_edge.setBackward(true);
             edges.add(new_edge);
+        }
     }
 
     public void deleteNode(Node node){
