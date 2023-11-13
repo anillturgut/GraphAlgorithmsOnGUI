@@ -2,13 +2,16 @@ package gui;
 
 import algo.*;
 import models.Graph;
+import org.apache.poi.ss.usermodel.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.File;
 
@@ -270,10 +273,13 @@ public class MainWindow extends JPanel {
 
                 // Check if the user chose a file
                 if (result == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
+                    File filePath = fileChooser.getSelectedFile();
+                    /*
                     JOptionPane.showMessageDialog(null,
-                            "Selected File Path: " + selectedFile.toString());
+                            "Selected File Path: " + selectedFile.toString());*/
                     // Do something with the selected file, e.g., open or process it
+                    ExcelImport excelImport = new ExcelImport(filePath.toString());
+                    excelImport.getExcelFromPath();
                 }
             }
         });
