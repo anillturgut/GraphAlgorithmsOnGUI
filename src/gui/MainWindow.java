@@ -111,7 +111,6 @@ public class MainWindow extends JPanel {
                                 "Shift + Left Click       :    Set node as source\n" +
                                 "Shift + Right Click     :    Set node as destination\n" +
                                 "Ctrl  + Drag               :    Reposition Node\n" +
-                                "Ctrl  + Click                :    Get Path of Node\n" +
                                 "Ctrl  + Shift + Click   :    Delete Node/Edge\n");
             }
         });
@@ -275,7 +274,7 @@ public class MainWindow extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
-
+                fileChooser.setDialogTitle("Select network excel file");
                 FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel Files", "xls", "xlsx");
                 fileChooser.setFileFilter(filter);
 
