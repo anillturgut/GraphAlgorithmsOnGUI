@@ -188,6 +188,7 @@ public class MainWindow extends JPanel {
                 }else if (comboBox.getSelectedItem() == "Augmenting-Path") {
                     AugmentingPathAlgorithm augmentingPathAlgorithm = new AugmentingPathAlgorithm(graph);
                     try {
+                        graphPanel.setPath(null,comboBox.getSelectedItem().toString());
                         augmentingPathAlgorithm.run();
                         JOptionPane.showMessageDialog(null,
                                 "Maximum flow that can be sent from "+graph.getSource().toString() +
@@ -203,6 +204,7 @@ public class MainWindow extends JPanel {
                 }else if (comboBox.getSelectedItem() == "Capacity-Scaling") {
                     CapacityScalingAlgorithm capacityScalingAlgorithm = new CapacityScalingAlgorithm(graph);
                     try {
+                        graphPanel.setPath(null,comboBox.getSelectedItem().toString());
                         capacityScalingAlgorithm.run();
                         JOptionPane.showMessageDialog(null,
                                 "Maximum flow that can be sent from "+graph.getSource().toString() +
@@ -220,6 +222,7 @@ public class MainWindow extends JPanel {
                 }else if (comboBox.getSelectedItem() == "PreFlow-Push") {
                     PreFlowPushAlgorithm preflowPushAlgorithm = new PreFlowPushAlgorithm(graph);
                     try {
+                        graphPanel.setPath(null,comboBox.getSelectedItem().toString());
                         preflowPushAlgorithm.run();
                         JOptionPane.showMessageDialog(null,
                                 "Maximum flow that can be sent from "+graph.getSource().toString() +
