@@ -91,7 +91,7 @@ public class PreFlowPushAlgorithm {
      */
     private boolean push(Node n) {
         for (Edge e : getNeighbors(n)) {
-            if ((distances.get(n)> distances.get(e.getNodeTwo())) && (e.getFlow() != e.getWeight())) {
+            if ((distances.get(n).equals(distances.get(e.getNodeTwo()) + 1)) && (e.getFlow() != e.getWeight())) {
                 int flow = Math.min(e.getWeight() - e.getFlow(), n.getExcess());
                 int excessFlowOne = n.getExcess();
                 excessFlowOne -= flow;
@@ -178,6 +178,8 @@ public class PreFlowPushAlgorithm {
     private void controlEdgeIsActive(Edge edge){
         if(edge.getWeight() == edge.getFlow())
             edge.setActive(false);
+        else if (edge.isBackward() && Math.abs(edge.getFlow()) > 0 && edge.getWeight() == 0)
+            edge.setActive(false);
     }
     public int getMaxFlow(Node destination){ return destination.getExcess();}
 
@@ -203,8 +205,9 @@ public class PreFlowPushAlgorithm {
     public boolean activeEdgeFromNode(Node n){
         boolean flag = false;
         for (Edge edge : getNeighbors(n)){
-            if (edge.isActive()){
+            if (edge.isActive()) {
                 flag = true;
+                break;
             }
         }
         return flag;
