@@ -69,9 +69,12 @@ public class MainWindow extends JPanel {
         JButton personal = new JButton();
         setupIcon(personal, "boun");
         personal.setToolTipText("My Information");
-        final JButton importExcel = new JButton();
+        JButton importExcel = new JButton();
         setupIcon(importExcel, "excel");
         importExcel.setToolTipText("Import excel to draw network");
+        final JButton exportExcel = new JButton();
+        setupIcon(exportExcel, "export");
+        exportExcel.setToolTipText("Export current network to the excel file");
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(DrawUtils.parseColor("#DDDDDD"));
@@ -79,6 +82,7 @@ public class MainWindow extends JPanel {
         buttonPanel.add(run);
         buttonPanel.add(info);
         buttonPanel.add(importExcel);
+        buttonPanel.add(exportExcel);
         buttonPanel.add(algorithm, BorderLayout.BEFORE_FIRST_LINE);
         comboBox = new JComboBox<>();
         comboBox.setBackground(DrawUtils.parseColor("#DDDDDD"));
@@ -284,6 +288,21 @@ public class MainWindow extends JPanel {
                     // Do something with the selected file, e.g., open or process it
                     ExcelImport excelImport = new ExcelImport(graph,graphPanel,filePath.toString());
                     excelImport.getExcelFromPath();
+                }
+            }
+        });
+        exportExcel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                ExportExcel excel = new ExportExcel(graph,graphPanel);
+                fileChooser.setDialogTitle("Select Destination Path");
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                int userSelection = fileChooser.showSaveDialog(MainWindow.this);
+
+                if (userSelection == JFileChooser.APPROVE_OPTION) {
+                    String destinationPath = fileChooser.getSelectedFile().getAbsolutePath() + ".xlsx";
+                    excel.exportExcel(destinationPath);
                 }
             }
         });
