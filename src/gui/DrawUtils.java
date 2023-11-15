@@ -119,7 +119,8 @@ public class DrawUtils {
     public void drawEdge(Edge edge) {
         g.setColor(parseColor("#555555"));
         drawBaseEdge(edge);
-        drawWeight(edge);
+        if(!edge.isBackward())
+            drawWeight(edge);
     }
     public void drawArrow(Graphics g1, Edge edge, int x1, int y1, int x2, int y2) {
         Graphics2D g = (Graphics2D) g1.create();
