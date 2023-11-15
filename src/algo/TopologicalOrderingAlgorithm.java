@@ -64,6 +64,12 @@ public class TopologicalOrderingAlgorithm {
                 return false;
             }
         }
+        for(Edge edge : graph.getEdges()){
+            if(edge.getWeight() < 0){
+                message = "Network has at least a negative weighted arc. Either change its weight or use alternative algorithms such as Bellman-Ford";
+                return false;
+            }
+        }
 
         return true;
     }
