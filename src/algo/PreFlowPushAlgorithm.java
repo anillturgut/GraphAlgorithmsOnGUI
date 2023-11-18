@@ -120,8 +120,6 @@ public class PreFlowPushAlgorithm {
             if ((e.getFlow() != e.getWeight()) && (distances.get(e.getNodeTwo()) < minDistance)) {
                 minDistance = distances.get(e.getNodeTwo());
                 distances.put(n, minDistance + 1);
-            }    else if (n.getExcess() > 0 && !activeEdgeFromNode(n)){
-                n.setExcess(0);
             }
         }
     }
@@ -136,7 +134,7 @@ public class PreFlowPushAlgorithm {
      */
     private Node getActiveNode() {
         for (Node node : graph.getNodes()){
-            if ((node.getExcess() > 0) && !node.equals(graph.getDestination())){
+            if ((node.getExcess() > 0) && !node.equals(graph.getDestination()) && !node.equals(graph.getSource())){
                 return node;
             }
         }
@@ -156,7 +154,8 @@ public class PreFlowPushAlgorithm {
                 int adjacentExcess = adjacent.getExcess();
                 adjacentExcess += edge.getFlow();
                 adjacent.setExcess(adjacentExcess);
-                adjacent.addEdge(source,-edge.getFlow(),0);
+                //adjacent.addEdge(source,-edge.getFlow(),0);
+                graph.addEdgePreFlow(adjacent.addEdge(source,-edge.getFlow(),0));
             }
         }
     }
