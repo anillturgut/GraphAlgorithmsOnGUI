@@ -18,7 +18,8 @@ public class PreFlowPushAlgorithm {
         this.distances = new HashMap<>();
         for (Edge edge: graph.getEdges()){
             edge.setResidual(edge.getWeight());
-            edge.setFlow(0);
+            if(!edge.isBackward())
+                edge.setFlow(0);
         }
         for (Node node: graph.getNodes()){
             node.setExcess(0);
