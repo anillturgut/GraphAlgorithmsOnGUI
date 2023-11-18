@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
@@ -22,6 +23,8 @@ public class MainWindow extends JPanel {
     private GraphPanel graphPanel;
 
     private JComboBox<String> comboBox;
+
+    private static boolean loggingEnabled = false;
 
     public MainWindow() {
         super.setLayout(new BorderLayout());
@@ -75,6 +78,8 @@ public class MainWindow extends JPanel {
         final JButton exportExcel = new JButton();
         setupIcon(exportExcel, "export");
         exportExcel.setToolTipText("Export current network to the excel file");
+        JCheckBox loggingCheckBox = new JCheckBox("Enable Logging");
+        loggingCheckBox.setFont(new Font("Arial", Font.PLAIN, 14));
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(DrawUtils.parseColor("#DDDDDD"));
@@ -91,6 +96,7 @@ public class MainWindow extends JPanel {
         comboBox.setToolTipText("Select an algorithm");
         buttonPanel.add(comboBox, BorderLayout.CENTER);
         buttonPanel.add(personal);
+        buttonPanel.add(loggingCheckBox);
 
 
         reset.addActionListener(new ActionListener() {
@@ -126,6 +132,11 @@ public class MainWindow extends JPanel {
                         JOptionPane.showMessageDialog(null,
                                 "Shortest Path: " + dijkstraAlgorithm.getDestinationPathAsString() + "\n"
                                         + "              Total Distance: " + dijkstraAlgorithm.getDestinationDistance());
+                        if (loggingEnabled){
+                            LogActions logDijkstra = new LogActions(graph,graphPanel,
+                                                                    dijkstraAlgorithm.getDestinationPathAsString(),"Dijkstra's Algorithm",dijkstraAlgorithm.getDestinationDistance());
+                            logDijkstra.log();
+                        }
                     } catch (IllegalStateException ise) {
                         JOptionPane.showMessageDialog(null, ise.getMessage());
                     }
@@ -162,6 +173,12 @@ public class MainWindow extends JPanel {
                         JOptionPane.showMessageDialog(null,
                                 "Shortest Path: " + bellmanFordAlgorithm.getDestinationPathAsString() + "\n"
                                         + "              Total Distance: " + bellmanFordAlgorithm.getDestinationDistance());
+                        if (loggingEnabled){
+                            LogActions logBellman = new LogActions(graph,graphPanel,
+                                    bellmanFordAlgorithm.getDestinationPathAsString(),"Bellman Ford Algorithm",
+                                    bellmanFordAlgorithm.getDestinationDistance());
+                            logBellman.log();
+                        }
 
                     } catch (IllegalStateException ise) {
                         JOptionPane.showMessageDialog(null, ise.getMessage());
@@ -243,6 +260,12 @@ public class MainWindow extends JPanel {
                                 "Topological Order: " + topologicalOrderingAlgorithm.getTopologicalOrderAsString() + "\n" +
                                 "Shortest Path: " + topologicalOrderingAlgorithm.getDestinationPathAsString() + "\n"
                                         + "              Total Distance: " + topologicalOrderingAlgorithm.getDestinationDistance());
+                        if (loggingEnabled){
+                            LogActions logTopological = new LogActions(graph,graphPanel,
+                                    topologicalOrderingAlgorithm.getDestinationPathAsString(),"Topological Ordering Algorithm",
+                                    topologicalOrderingAlgorithm.getDestinationDistance());
+                            logTopological.log();
+                        }
 
                     } catch (IllegalStateException ise) {
                         JOptionPane.showMessageDialog(null, ise.getMessage());
@@ -306,6 +329,14 @@ public class MainWindow extends JPanel {
                     String destinationPath = fileChooser.getSelectedFile().getAbsolutePath() + ".xlsx";
                     excel.exportExcel(destinationPath);
                 }
+            }
+        });
+
+        // Add an ActionListener to the checkbox
+        loggingCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loggingEnabled = loggingCheckBox.isSelected();
             }
         });
 
