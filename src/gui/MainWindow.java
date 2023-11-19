@@ -24,7 +24,7 @@ public class MainWindow extends JPanel {
 
     private JComboBox<String> comboBox;
 
-    private static boolean loggingEnabled = false;
+    private boolean loggingEnabled = false;
 
     public MainWindow() {
         super.setLayout(new BorderLayout());
@@ -133,7 +133,7 @@ public class MainWindow extends JPanel {
                                 "Shortest Path: " + dijkstraAlgorithm.getDestinationPathAsString() + "\n"
                                         + "              Total Distance: " + dijkstraAlgorithm.getDestinationDistance());
                         if (loggingEnabled){
-                            LogActions logDijkstra = new LogActions(graph,graphPanel,
+                            LogActions logDijkstra = new LogActions(graph,graphPanel, loggingEnabled,
                                                                     dijkstraAlgorithm.getDestinationPathAsString(),"Dijkstra's Algorithm",dijkstraAlgorithm.getDestinationDistance());
                             logDijkstra.log();
                         }
@@ -174,7 +174,7 @@ public class MainWindow extends JPanel {
                                 "Shortest Path: " + bellmanFordAlgorithm.getDestinationPathAsString() + "\n"
                                         + "              Total Distance: " + bellmanFordAlgorithm.getDestinationDistance());
                         if (loggingEnabled){
-                            LogActions logBellman = new LogActions(graph,graphPanel,
+                            LogActions logBellman = new LogActions(graph,graphPanel,loggingEnabled,
                                     bellmanFordAlgorithm.getDestinationPathAsString(),"Bellman Ford Algorithm",
                                     bellmanFordAlgorithm.getDestinationDistance());
                             logBellman.log();
@@ -261,7 +261,7 @@ public class MainWindow extends JPanel {
                                 "Shortest Path: " + topologicalOrderingAlgorithm.getDestinationPathAsString() + "\n"
                                         + "              Total Distance: " + topologicalOrderingAlgorithm.getDestinationDistance());
                         if (loggingEnabled){
-                            LogActions logTopological = new LogActions(graph,graphPanel,
+                            LogActions logTopological = new LogActions(graph,graphPanel, loggingEnabled,
                                     topologicalOrderingAlgorithm.getDestinationPathAsString(),"Topological Ordering Algorithm",
                                     topologicalOrderingAlgorithm.getDestinationDistance());
                             logTopological.log();

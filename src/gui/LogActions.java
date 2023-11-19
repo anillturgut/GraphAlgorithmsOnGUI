@@ -29,15 +29,19 @@ public class LogActions {
 
     private int optDist;
 
+    private boolean loggingEnabled;
+
     private static final Logger LOGGER = Logger.getLogger(LogActions.class.getName());
 
 
-    public LogActions(Graph graph, GraphPanel graphPanel, String shortestPath, String algorithmName, int optDist){
+    public LogActions(Graph graph, GraphPanel graphPanel, boolean loggingEnabled,
+                      String shortestPath, String algorithmName, int optDist){
         this.graph = graph;
         this.graphPanel = graphPanel;
         this.shortestPath = shortestPath;
         this.algorithmName = algorithmName;
         this.optDist = optDist;
+        this.loggingEnabled = loggingEnabled;
     }
     public LogActions(Graph graph, GraphPanel graphPanel, int maximumFlow){
         this.graph = graph;
@@ -65,7 +69,7 @@ public class LogActions {
         // Close the logger
         Logger.getLogger("").removeHandler(Logger.getLogger("").getHandlers()[0]);
     }
-    private static void setupLogger() {
+    private void setupLogger() {
         try {
             // Set the log file location to the user's Documents folder
             String os = System.getProperty("os.name").toLowerCase();
@@ -108,7 +112,8 @@ public class LogActions {
             LOGGER.setLevel(Level.INFO);
 
             // Add the file handler to the logger if logging is enabled
-            LOGGER.addHandler(fileHandler);
+            if(loggingEnabled)
+                LOGGER.addHandler(fileHandler);
 
 
         } catch (IOException e) {
