@@ -147,6 +147,12 @@ public class MainWindow extends JPanel {
                         graphPanel.setPath(breadthFirstSearchAlgorithm.getDestinationPath(),comboBox.getSelectedItem().toString());
                         JOptionPane.showMessageDialog(null,
                                 "Traversed Path: " + breadthFirstSearchAlgorithm.getDestinationPathAsString() + "\n");
+                        if (loggingEnabled){
+                            LogActions logBFS = new LogActions(graph,graphPanel,loggingEnabled,
+                                                                breadthFirstSearchAlgorithm.getDestinationPathAsString(),
+                                                                "Breadth First Search Algorithm");
+                            logBFS.log();
+                        }
                     } catch (IllegalStateException ise) {
                         JOptionPane.showMessageDialog(null, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
@@ -159,6 +165,12 @@ public class MainWindow extends JPanel {
                         graphPanel.setPath(depthFirstSearchAlgorithm.getDestinationPath(),comboBox.getSelectedItem().toString());
                         JOptionPane.showMessageDialog(null,
                                 "Traversed Path: " + depthFirstSearchAlgorithm.getDestinationPathAsString() + "\n");
+                        if (loggingEnabled){
+                            LogActions logDFS = new LogActions(graph,graphPanel,loggingEnabled,
+                                    depthFirstSearchAlgorithm.getDestinationPathAsString(),
+                                    "Depth First Search Algorithm");
+                            logDFS.log();
+                        }
                     } catch (IllegalStateException ise) {
                         JOptionPane.showMessageDialog(null, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
@@ -196,6 +208,12 @@ public class MainWindow extends JPanel {
                             JOptionPane.showMessageDialog(null,
                                     "Since there is no destination defined, path is not seen.");
                         }
+                        if (loggingEnabled){
+                            LogActions logFloyd = new LogActions(graph,graphPanel,loggingEnabled,
+                                    floydWarshallAlgorithm.getLoggedTableModel().toString(),"Floyd Warshall Algorithm",
+                                    floydWarshallAlgorithm.getDestinationDistance());
+                            logFloyd.log();
+                        }
                     } catch (IllegalStateException ise) {
                         JOptionPane.showMessageDialog(null, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
@@ -212,6 +230,12 @@ public class MainWindow extends JPanel {
                                         + augmentingPathAlgorithm.getMaxFlow() + "\n" +
                                         "Edge's residual/original capacities: " + "\n" +
                                         augmentingPathAlgorithm.getResidualCapacitiesAsString(graph.getEdges()));
+                        if (loggingEnabled){
+                            LogActions logAugmentingPath = new LogActions(graph,graphPanel,loggingEnabled,
+                                    augmentingPathAlgorithm.getMaxFlow(), augmentingPathAlgorithm.getResidualCapacitiesAsString(graph.getEdges()),
+                                    "Augmenting Path Algorithm");
+                            logAugmentingPath.log();
+                        }
                     } catch (IllegalStateException ise) {
                         JOptionPane.showMessageDialog(null, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
@@ -230,6 +254,12 @@ public class MainWindow extends JPanel {
                                         capacityScalingAlgorithm.getScalingPhasesAsString() + "\n" +
                                         "Edge's residual/original capacities: " + "\n" +
                                         capacityScalingAlgorithm.getResidualCapacitiesAsString(graph.getEdges()));
+                        if (loggingEnabled){
+                            LogActions logCapacityScaling = new LogActions(graph,graphPanel,loggingEnabled,
+                                    capacityScalingAlgorithm.getMaxFlow(), capacityScalingAlgorithm.getResidualCapacitiesAsString(graph.getEdges()),
+                                    "Capacity Scaling Algorithm");
+                            logCapacityScaling.log();
+                        }
                     } catch (IllegalStateException ise) {
                         JOptionPane.showMessageDialog(null, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
@@ -246,6 +276,12 @@ public class MainWindow extends JPanel {
                                         + preflowPushAlgorithm.getMaxFlow(graph.getDestination()) + "\n" +
                                         "Edge's flow/capacity information : " + "\n" +
                                         preflowPushAlgorithm.getEdgeFlowAsString(graph.getEdges()));
+                        if (loggingEnabled){
+                            LogActions logPreFlow = new LogActions(graph,graphPanel,loggingEnabled,
+                                    preflowPushAlgorithm.getMaxFlow(graph.getDestination()), preflowPushAlgorithm.getEdgeFlowAsString(graph.getEdges()),
+                                    "PreFlow Push Algorithm");
+                            logPreFlow.log();
+                        }
                     } catch (IllegalStateException ise) {
                         JOptionPane.showMessageDialog(null, ise.getMessage());
                     } catch (OutOfMemoryError ome) {

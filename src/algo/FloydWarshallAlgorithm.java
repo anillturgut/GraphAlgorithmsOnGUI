@@ -15,6 +15,7 @@ public class FloydWarshallAlgorithm {
     private Graph graph;
     private Map<Node, Node> predecessors;
     private Map<Node, Integer> distances;
+    private DefaultTableModel loggedTableModel;
 
     private int maxValue;
 
@@ -129,6 +130,8 @@ public class FloydWarshallAlgorithm {
             rowIndex++;
         }
 
+        loggedTableModel = model;
+
         JTable table = new JTable(model);
 
         JScrollPane scrollPane = new JScrollPane(table);
@@ -148,6 +151,8 @@ public class FloydWarshallAlgorithm {
     public List<Node> getDestinationPath() {
         return getPath(graph.getSource(),graph.getDestination());
     }
+
+    public DefaultTableModel getLoggedTableModel(){return loggedTableModel;}
 
     public List<Node> getPath(Node sourceNode, Node destinationNode){
         List<Node> path = new ArrayList<>();

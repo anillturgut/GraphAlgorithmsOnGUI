@@ -23,6 +23,10 @@ public class LogActions {
 
     private  String shortestPath;
 
+    private  String residualCapacities;
+
+    private String traversedPath;
+
     private String algorithmName;
 
     private int maximumFlow;
@@ -44,10 +48,22 @@ public class LogActions {
         this.optDist = optDist;
         this.loggingEnabled = loggingEnabled;
     }
-    public LogActions(Graph graph, GraphPanel graphPanel, int maximumFlow){
+    public LogActions(Graph graph, GraphPanel graphPanel, boolean loggingEnabled,
+                      String traversedPath, String algorithmName){
+        this.graph = graph;
+        this.graphPanel = graphPanel;
+        this.traversedPath = traversedPath;
+        this.loggingEnabled = loggingEnabled;
+        this.algorithmName = algorithmName;
+    }
+    public LogActions(Graph graph, GraphPanel graphPanel,boolean loggingEnabled,
+                      int maximumFlow, String residualCapacities, String algorithmName){
         this.graph = graph;
         this.graphPanel = graphPanel;
         this.maximumFlow = maximumFlow;
+        this.residualCapacities = residualCapacities;
+        this.algorithmName = algorithmName;
+        this.loggingEnabled = loggingEnabled;
     }
 
     public void log(){
@@ -64,6 +80,15 @@ public class LogActions {
                 algorithmName.equals("Topological Ordering Algorithm") ||algorithmName.equals("Floyd Warshall Algorithm")){
             LOGGER.info("Shortest Path From " + graph.getSource().toString() + " to " +
                     graph.getDestination() + ": " + shortestPath + "              Total Distance: " + optDist);
+        } else if (algorithmName.equals("Breadth First Search Algorithm" ) || algorithmName.equals("Depth First Search Algorithm" )){
+            LOGGER.info("Traversed Path: " + traversedPath);
+        } else if (algorithmName.equals("Augmenting Path Algorithm") || algorithmName.equals("Capacity Scaling Algorithm") ||
+                    algorithmName.equals("PreFlow Push Algorithm")){
+            LOGGER.info("Maximum flow that can be sent from "+graph.getSource().toString() +
+                    " to " + graph.getDestination().toString() + " : "
+                    + maximumFlow + "\n" +
+                    "Edge's residual/original capacities: \n" +
+                    residualCapacities);
         }
         LOGGER.info("Algorithm Completed \n\n");
 
