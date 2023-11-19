@@ -80,6 +80,7 @@ public class MainWindow extends JPanel {
         exportExcel.setToolTipText("Export current network to the excel file");
         JCheckBox loggingCheckBox = new JCheckBox("Enable Logging");
         loggingCheckBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        loggingCheckBox.setToolTipText("Check if you want to log the results on your Documents/ folder");
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(DrawUtils.parseColor("#DDDDDD"));
