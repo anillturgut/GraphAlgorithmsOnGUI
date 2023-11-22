@@ -64,13 +64,6 @@ public class TopologicalOrderingAlgorithm {
                 return false;
             }
         }
-        for(Edge edge : graph.getEdges()){
-            if(edge.getWeight() < 0){
-                message = "Network has at least a negative weighted arc. Either change its weight or use alternative algorithms such as Bellman-Ford";
-                return false;
-            }
-        }
-
         return true;
     }
     private List<Edge> getNeighbors(Node node) {
@@ -140,6 +133,11 @@ public class TopologicalOrderingAlgorithm {
         barrenNodes = new PriorityQueue<>(graph.getNodes().size(), new NodeComparator());
         initializeAlgorithm();
         List<Node> topologicalOrder = getTopologicalOrder();
+        if (topologicalOrder.size() != graph.getNodes().size()){
+            String warn = "Cycle Detected!";
+            graph.setSolved(false);
+            throw new IllegalStateException(warn);
+        }
 
         Node source = graph.getSource();
         distances.put(source,0);
