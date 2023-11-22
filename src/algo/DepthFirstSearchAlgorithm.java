@@ -13,7 +13,6 @@ public class DepthFirstSearchAlgorithm {
     private boolean safe = false;
     private String message = null;
 
-    private Map<Node, Integer> distances;
     private Graph graph;
     private Map<Node, Node> predecessors;
     private List<Node> marked;
@@ -26,13 +25,8 @@ public class DepthFirstSearchAlgorithm {
         this.graph = graph;
         marked = new ArrayList<>();
         predecessors = new HashMap<>();
-        distances = new HashMap<>();
         traversedPath =  new ArrayList<>();
         traversedPathDistinct = new ArrayList<>();
-
-        for(Node node : graph.getNodes()){
-            distances.put(node, Integer.MAX_VALUE);
-        }
 
         safe = evaluate();
     }
@@ -87,7 +81,6 @@ public class DepthFirstSearchAlgorithm {
             for (Edge neighbor : getNeighbors(selectedNode)) {
                 Node adjacent = getAdjacent(neighbor, selectedNode);
                 if (adjacent != null && !marked.contains(adjacent) && !traversedPath.contains(adjacent)){
-                    distances.put(adjacent, neighbor.getWeight());
                     marked.add(adjacent);
                     predecessors.put(adjacent, selectedNode);
                     traversedPath.add(selectedNode);
