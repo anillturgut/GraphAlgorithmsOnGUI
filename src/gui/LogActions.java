@@ -15,6 +15,9 @@ import models.Graph;
 import models.Edge;
 import models.Graph;
 import models.Node;
+
+import javax.swing.table.DefaultTableModel;
+
 public class LogActions {
 
     private Graph graph;
@@ -33,6 +36,10 @@ public class LogActions {
 
     private int optDist;
 
+    private double timeElapsed;
+
+    private DefaultTableModel defaultTableModel;
+
     private boolean loggingEnabled;
 
     private static final Logger LOGGER = Logger.getLogger(LogActions.class.getName());
@@ -40,30 +47,42 @@ public class LogActions {
 
 
     public LogActions(Graph graph, GraphPanel graphPanel, boolean loggingEnabled,
-                      String shortestPath, String algorithmName, int optDist){
+                      String shortestPath, String algorithmName, int optDist, double timeElapsed){
         this.graph = graph;
         this.graphPanel = graphPanel;
         this.shortestPath = shortestPath;
         this.algorithmName = algorithmName;
         this.optDist = optDist;
         this.loggingEnabled = loggingEnabled;
+        this.timeElapsed = timeElapsed;
     }
     public LogActions(Graph graph, GraphPanel graphPanel, boolean loggingEnabled,
-                      String traversedPath, String algorithmName){
+                      DefaultTableModel defaultTableModel, String algorithmName,double timeElapsed){
+        this.graph = graph;
+        this.graphPanel = graphPanel;
+        this.defaultTableModel = defaultTableModel;
+        this.algorithmName = algorithmName;
+        this.loggingEnabled = loggingEnabled;
+        this.timeElapsed = timeElapsed;
+    }
+    public LogActions(Graph graph, GraphPanel graphPanel, boolean loggingEnabled,
+                      String traversedPath, String algorithmName, double timeElapsed){
         this.graph = graph;
         this.graphPanel = graphPanel;
         this.traversedPath = traversedPath;
         this.loggingEnabled = loggingEnabled;
         this.algorithmName = algorithmName;
+        this.timeElapsed = timeElapsed;
     }
     public LogActions(Graph graph, GraphPanel graphPanel,boolean loggingEnabled,
-                      int maximumFlow, String residualCapacities, String algorithmName){
+                      int maximumFlow, String residualCapacities, String algorithmName, double timeElapsed){
         this.graph = graph;
         this.graphPanel = graphPanel;
         this.maximumFlow = maximumFlow;
         this.residualCapacities = residualCapacities;
         this.algorithmName = algorithmName;
         this.loggingEnabled = loggingEnabled;
+        this.timeElapsed = timeElapsed;
     }
 
     public void log(){
@@ -77,10 +96,38 @@ public class LogActions {
         LOGGER.info("Node List: " + graph.getNodes().toString());
         LOGGER.info("Edge List: " + graph.getEdges().toString());
         if (algorithmName.equals("Dijkstra's Algorithm" ) || algorithmName.equals("Bellman Ford Algorithm") ||
-                algorithmName.equals("Topological Ordering Algorithm") ||algorithmName.equals("Floyd Warshall Algorithm")){
+                algorithmName.equals("Topological Ordering Algorithm")){
             LOGGER.info("Shortest Path From " + graph.getSource().toString() + " to " +
                     graph.getDestination() + ": " + shortestPath + "              Total Distance: " + optDist);
-        } else if (algorithmName.equals("Breadth First Search Algorithm" ) || algorithmName.equals("Depth First Search Algorithm" )){
+        }else if (algorithmName.equals("Floyd Warshall Algorithm")){
+
+            String matrix = "";
+            // Get column names
+            int columnCount = defaultTableModel.getColumnCount();
+            String[] columnNames = new String[columnCount];
+            for (int i = 0; i < columnCount; i++) {
+                columnNames[i] = defaultTableModel.getColumnName(i);
+            }
+
+            // Print column names
+            matrix += "\t";
+            for (String columnName : columnNames) {
+                matrix += columnName + "\t";
+            }
+            matrix += "\n";
+
+            // Print table data
+            int rowCount = defaultTableModel.getRowCount();
+            for (int i = 0; i < rowCount; i++) {
+                matrix += defaultTableModel.getColumnName(i) + "\t";
+                for (int j = 1; j < columnCount; j++) {
+                    matrix += defaultTableModel.getValueAt(i, j) + "\t";
+                }
+                matrix += "\n";
+            }
+            LOGGER.info("Shortest Path between each node (All Pairs): \n"
+                        + matrix);
+        }else if (algorithmName.equals("Breadth First Search Algorithm" ) || algorithmName.equals("Depth First Search Algorithm" )){
             LOGGER.info("Traversed Path: " + traversedPath);
         } else if (algorithmName.equals("Augmenting Path Algorithm") || algorithmName.equals("Capacity Scaling Algorithm") ||
                     algorithmName.equals("PreFlow Push Algorithm")){
@@ -90,7 +137,8 @@ public class LogActions {
                     "Edge's residual/original capacities: \n" +
                     residualCapacities);
         }
-        LOGGER.info("Algorithm Completed \n\n");
+        LOGGER.info("Algorithm Completed!");
+        LOGGER.info("Total elapsed time while executing " + algorithmName + "(sec) : " + timeElapsed + "\n\n");
 
         // Close the logger
         closeLogger();

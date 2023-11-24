@@ -125,17 +125,22 @@ public class MainWindow extends JPanel {
         run.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                long startTime = System.nanoTime();
                 if (comboBox.getSelectedItem() == "Dijkstra's"){
                     DijkstraAlgorithm dijkstraAlgorithm = new DijkstraAlgorithm(graph);
                     try {
                         dijkstraAlgorithm.run();
+                        long endTime = System.nanoTime();
+                        long elapsedTimeInNanos = endTime - startTime;
+                        double elapsedTime = elapsedTimeInNanos / 1e9;
                         graphPanel.setPath(dijkstraAlgorithm.getDestinationPath(), comboBox.getSelectedItem().toString());
                         JOptionPane.showMessageDialog(null,
                                 "Shortest Path: " + dijkstraAlgorithm.getDestinationPathAsString() + "\n"
                                         + "              Total Distance: " + dijkstraAlgorithm.getDestinationDistance());
                         if (loggingEnabled){
                             LogActions logDijkstra = new LogActions(graph,graphPanel, loggingEnabled,
-                                                                    dijkstraAlgorithm.getDestinationPathAsString(),"Dijkstra's Algorithm",dijkstraAlgorithm.getDestinationDistance());
+                                                                    dijkstraAlgorithm.getDestinationPathAsString(),"Dijkstra's Algorithm",
+                                                                    dijkstraAlgorithm.getDestinationDistance(),elapsedTime);
                             logDijkstra.log();
                         }
                     } catch (IllegalStateException ise) {
@@ -145,13 +150,16 @@ public class MainWindow extends JPanel {
                     BreadthFirstSearchAlgorithm breadthFirstSearchAlgorithm = new BreadthFirstSearchAlgorithm(graph);
                     try {
                         breadthFirstSearchAlgorithm.run();
+                        long endTime = System.nanoTime();
+                        long elapsedTimeInNanos = endTime - startTime;
+                        double elapsedTime = elapsedTimeInNanos / 1e9;
                         graphPanel.setPath(breadthFirstSearchAlgorithm.getDestinationPath(),comboBox.getSelectedItem().toString());
                         JOptionPane.showMessageDialog(null,
                                 "Traversed Path: " + breadthFirstSearchAlgorithm.getDestinationPathAsString() + "\n");
                         if (loggingEnabled){
                             LogActions logBFS = new LogActions(graph,graphPanel,loggingEnabled,
                                                                 breadthFirstSearchAlgorithm.getDestinationPathAsString(),
-                                                                "Breadth First Search Algorithm");
+                                                                "Breadth First Search Algorithm",elapsedTime);
                             logBFS.log();
                         }
                     } catch (IllegalStateException ise) {
@@ -163,13 +171,16 @@ public class MainWindow extends JPanel {
                     DepthFirstSearchAlgorithm depthFirstSearchAlgorithm = new DepthFirstSearchAlgorithm(graph);
                     try {
                         depthFirstSearchAlgorithm.run();
+                        long endTime = System.nanoTime();
+                        long elapsedTimeInNanos = endTime - startTime;
+                        double elapsedTime = elapsedTimeInNanos / 1e9;
                         graphPanel.setPath(depthFirstSearchAlgorithm.getDestinationPath(),comboBox.getSelectedItem().toString());
                         JOptionPane.showMessageDialog(null,
                                 "Traversed Path: " + depthFirstSearchAlgorithm.getDestinationPathAsString() + "\n");
                         if (loggingEnabled){
                             LogActions logDFS = new LogActions(graph,graphPanel,loggingEnabled,
                                     depthFirstSearchAlgorithm.getDestinationPathAsString(),
-                                    "Depth First Search Algorithm");
+                                    "Depth First Search Algorithm",elapsedTime);
                             logDFS.log();
                         }
                     } catch (IllegalStateException ise) {
@@ -181,7 +192,9 @@ public class MainWindow extends JPanel {
                     BellmanFordAlgorithm bellmanFordAlgorithm = new BellmanFordAlgorithm(graph);
                     try {
                         bellmanFordAlgorithm.run();
-
+                        long endTime = System.nanoTime();
+                        long elapsedTimeInNanos = endTime - startTime;
+                        double elapsedTime = elapsedTimeInNanos / 1e9;
                         graphPanel.setPath(bellmanFordAlgorithm.getDestinationPath(),comboBox.getSelectedItem().toString());
                         JOptionPane.showMessageDialog(null,
                                 "Shortest Path: " + bellmanFordAlgorithm.getDestinationPathAsString() + "\n"
@@ -189,7 +202,7 @@ public class MainWindow extends JPanel {
                         if (loggingEnabled){
                             LogActions logBellman = new LogActions(graph,graphPanel,loggingEnabled,
                                     bellmanFordAlgorithm.getDestinationPathAsString(),"Bellman Ford Algorithm",
-                                    bellmanFordAlgorithm.getDestinationDistance());
+                                    bellmanFordAlgorithm.getDestinationDistance(),elapsedTime);
                             logBellman.log();
                         }
 
@@ -202,6 +215,9 @@ public class MainWindow extends JPanel {
                     FloydWarshallAlgorithm floydWarshallAlgorithm = new FloydWarshallAlgorithm(graph);
                     try {
                         floydWarshallAlgorithm.run();
+                        long endTime = System.nanoTime();
+                        long elapsedTimeInNanos = endTime - startTime;
+                        double elapsedTime = elapsedTimeInNanos / 1e9;
                         floydWarshallAlgorithm.getDistanceMatrix();
                         if (graph.getDestination() != null){
                             graphPanel.setPath(floydWarshallAlgorithm.getDestinationPath(),comboBox.getSelectedItem().toString());
@@ -211,8 +227,7 @@ public class MainWindow extends JPanel {
                         }
                         if (loggingEnabled){
                             LogActions logFloyd = new LogActions(graph,graphPanel,loggingEnabled,
-                                    floydWarshallAlgorithm.getLoggedTableModel().toString(),"Floyd Warshall Algorithm",
-                                    floydWarshallAlgorithm.getDestinationDistance());
+                                    floydWarshallAlgorithm.getLoggedTableModel(),"Floyd Warshall Algorithm",elapsedTime);
                             logFloyd.log();
                         }
                     } catch (IllegalStateException ise) {
@@ -225,6 +240,9 @@ public class MainWindow extends JPanel {
                     try {
                         graphPanel.setPath(null,comboBox.getSelectedItem().toString());
                         augmentingPathAlgorithm.run();
+                        long endTime = System.nanoTime();
+                        long elapsedTimeInNanos = endTime - startTime;
+                        double elapsedTime = elapsedTimeInNanos / 1e9;
                         JOptionPane.showMessageDialog(null,
                                 "Maximum flow that can be sent from "+graph.getSource().toString() +
                                         " to " + graph.getDestination().toString() + " : "
@@ -234,7 +252,7 @@ public class MainWindow extends JPanel {
                         if (loggingEnabled){
                             LogActions logAugmentingPath = new LogActions(graph,graphPanel,loggingEnabled,
                                     augmentingPathAlgorithm.getMaxFlow(), augmentingPathAlgorithm.getResidualCapacitiesAsString(graph.getEdges()),
-                                    "Augmenting Path Algorithm");
+                                    "Augmenting Path Algorithm",elapsedTime);
                             logAugmentingPath.log();
                         }
                     } catch (IllegalStateException ise) {
@@ -247,6 +265,9 @@ public class MainWindow extends JPanel {
                     try {
                         graphPanel.setPath(null,comboBox.getSelectedItem().toString());
                         capacityScalingAlgorithm.run();
+                        long endTime = System.nanoTime();
+                        long elapsedTimeInNanos = endTime - startTime;
+                        double elapsedTime = elapsedTimeInNanos / 1e9;
                         JOptionPane.showMessageDialog(null,
                                 "Maximum flow that can be sent from "+graph.getSource().toString() +
                                         " to " + graph.getDestination().toString() + " : "
@@ -258,7 +279,7 @@ public class MainWindow extends JPanel {
                         if (loggingEnabled){
                             LogActions logCapacityScaling = new LogActions(graph,graphPanel,loggingEnabled,
                                     capacityScalingAlgorithm.getMaxFlow(), capacityScalingAlgorithm.getResidualCapacitiesAsString(graph.getEdges()),
-                                    "Capacity Scaling Algorithm");
+                                    "Capacity Scaling Algorithm",elapsedTime);
                             logCapacityScaling.log();
                         }
                     } catch (IllegalStateException ise) {
@@ -271,6 +292,9 @@ public class MainWindow extends JPanel {
                     try {
                         graphPanel.setPath(null,comboBox.getSelectedItem().toString());
                         preflowPushAlgorithm.run();
+                        long endTime = System.nanoTime();
+                        long elapsedTimeInNanos = endTime - startTime;
+                        double elapsedTime = elapsedTimeInNanos / 1e9;
                         JOptionPane.showMessageDialog(null,
                                 "Maximum flow that can be sent from "+graph.getSource().toString() +
                                         " to " + graph.getDestination().toString() + " : "
@@ -280,7 +304,7 @@ public class MainWindow extends JPanel {
                         if (loggingEnabled){
                             LogActions logPreFlow = new LogActions(graph,graphPanel,loggingEnabled,
                                     preflowPushAlgorithm.getMaxFlow(graph.getDestination()), preflowPushAlgorithm.getEdgeFlowAsString(graph.getEdges()),
-                                    "PreFlow Push Algorithm");
+                                    "PreFlow Push Algorithm",elapsedTime);
                             logPreFlow.log();
                         }
                     } catch (IllegalStateException ise) {
@@ -292,15 +316,19 @@ public class MainWindow extends JPanel {
                     TopologicalOrderingAlgorithm topologicalOrderingAlgorithm = new TopologicalOrderingAlgorithm(graph);
                     try {
                         topologicalOrderingAlgorithm.run();
+                        long endTime = System.nanoTime();
+                        long elapsedTimeInNanos = endTime - startTime;
+                        double elapsedTime = elapsedTimeInNanos / 1e9;
                         graphPanel.setPath(topologicalOrderingAlgorithm.getDestinationPath(),comboBox.getSelectedItem().toString());
                         JOptionPane.showMessageDialog(null,
                                 "Topological Order: " + topologicalOrderingAlgorithm.getTopologicalOrderAsString() + "\n" +
                                 "Shortest Path: " + topologicalOrderingAlgorithm.getDestinationPathAsString() + "\n"
                                         + "              Total Distance: " + topologicalOrderingAlgorithm.getDestinationDistance());
+
                         if (loggingEnabled){
                             LogActions logTopological = new LogActions(graph,graphPanel, loggingEnabled,
                                     topologicalOrderingAlgorithm.getDestinationPathAsString(),"Topological Ordering Algorithm",
-                                    topologicalOrderingAlgorithm.getDestinationDistance());
+                                    topologicalOrderingAlgorithm.getDestinationDistance(),elapsedTime);
                             logTopological.log();
                         }
 
