@@ -110,7 +110,6 @@ public class LogActions {
             }
 
             // Print column names
-            matrix += "\t";
             for (String columnName : columnNames) {
                 matrix += columnName + "\t";
             }
