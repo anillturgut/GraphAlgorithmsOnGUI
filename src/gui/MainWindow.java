@@ -235,7 +235,19 @@ public class MainWindow extends JPanel {
                     } catch (OutOfMemoryError ome) {
                         JOptionPane.showMessageDialog(null, "Memory error, control it.");
                     }catch (NullPointerException npe){}
-                }else if (comboBox.getSelectedItem() == "Augmenting-Path") {
+                }else if (comboBox.getSelectedItem() == "ShortestPath-LP") {
+                    ShortestPathProblemLP shortestPathProblemLP = new ShortestPathProblemLP(graph);
+                    try {
+                        shortestPathProblemLP.run();
+                        long endTime = System.nanoTime();
+                        long elapsedTimeInNanos = endTime - startTime;
+                        double elapsedTime = elapsedTimeInNanos / 1e9;
+                    } catch (IllegalStateException ise) {
+                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                    } catch (OutOfMemoryError ome) {
+                        JOptionPane.showMessageDialog(null, "Memory error, control it.");
+                    }catch (NullPointerException npe){}
+                } else if (comboBox.getSelectedItem() == "Augmenting-Path") {
                     AugmentingPathAlgorithm augmentingPathAlgorithm = new AugmentingPathAlgorithm(graph);
                     try {
                         graphPanel.setPath(null,comboBox.getSelectedItem().toString());
@@ -430,8 +442,8 @@ public class MainWindow extends JPanel {
         public void actionPerformed(ActionEvent event) {
             if (firstTimeSwitch) {
                 String[] selection = {"Dijkstra's", "Bread-First-Search","Depth-First-Search",
-                        "Topological-Ordering", "Bellman-Ford", "Floyd-Warshall", "Augmenting-Path",
-                        "Capacity-Scaling", "PreFlow-Push"};
+                        "Topological-Ordering", "Bellman-Ford", "Floyd-Warshall", "ShortestPath-LP",
+                        "Augmenting-Path", "Capacity-Scaling", "PreFlow-Push"};
                 for (int index = 0; index < selection.length; index++) {
                     comboBox.addItem(selection[index]);
                 }
