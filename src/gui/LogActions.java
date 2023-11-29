@@ -40,6 +40,8 @@ public class LogActions {
 
     private DefaultTableModel defaultTableModel;
 
+    private String optimizationResult;
+
     private boolean loggingEnabled;
 
     private static final Logger LOGGER = Logger.getLogger(LogActions.class.getName());
@@ -55,6 +57,17 @@ public class LogActions {
         this.optDist = optDist;
         this.loggingEnabled = loggingEnabled;
         this.timeElapsed = timeElapsed;
+    }
+    public LogActions(Graph graph, GraphPanel graphPanel, boolean loggingEnabled,
+                      String shortestPath, String algorithmName, int optDist, double timeElapsed, String optimizationResult){
+        this.graph = graph;
+        this.graphPanel = graphPanel;
+        this.shortestPath = shortestPath;
+        this.algorithmName = algorithmName;
+        this.optDist = optDist;
+        this.loggingEnabled = loggingEnabled;
+        this.timeElapsed = timeElapsed;
+        this.optimizationResult = optimizationResult;
     }
     public LogActions(Graph graph, GraphPanel graphPanel, boolean loggingEnabled,
                       DefaultTableModel defaultTableModel, String algorithmName,double timeElapsed){
@@ -99,7 +112,14 @@ public class LogActions {
                 algorithmName.equals("Topological Ordering Algorithm")){
             LOGGER.info("Shortest Path From " + graph.getSource().toString() + " to " +
                     graph.getDestination() + ": " + shortestPath + "              Total Distance: " + optDist);
-        }else if (algorithmName.equals("Floyd Warshall Algorithm")){
+        }else if (algorithmName.equals("Shortest Path Problem - LP Optimization")){
+            LOGGER.info("Shortest Path Problem Optimization Results: \n" +
+                    optimizationResult);
+            LOGGER.info(   "Results from dual LP : \n" +
+                    "Shortest Path From " + graph.getSource().toString() + " to " +
+                    graph.getDestination() + ": " + shortestPath + "              Total Distance: " + optDist);
+        }
+        else if (algorithmName.equals("Floyd Warshall Algorithm")){
 
             String matrix = "";
             // Get column names

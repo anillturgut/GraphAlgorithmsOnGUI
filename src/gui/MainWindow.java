@@ -1,6 +1,7 @@
 package gui;
 
 import algo.*;
+import gurobi.GRBException;
 import models.Graph;
 import org.apache.poi.ss.usermodel.*;
 
@@ -242,11 +243,27 @@ public class MainWindow extends JPanel {
                         long endTime = System.nanoTime();
                         long elapsedTimeInNanos = endTime - startTime;
                         double elapsedTime = elapsedTimeInNanos / 1e9;
+                        graphPanel.setPath(shortestPathProblemLP.getDestinationPath(),comboBox.getSelectedItem().toString());
+                        JOptionPane.showMessageDialog(null,
+                                        "Xij: Flow across (i,j) \n" +
+                                shortestPathProblemLP.getOptimizationResult() + "\n" +
+                                        "Result from Dual: \n" +
+                                        "Shortest Path: " + shortestPathProblemLP.getDestinationPathAsString() + "\n"
+                                        + "Total Distance: " + shortestPathProblemLP.getDestinationDistance());
+                        if (loggingEnabled){
+                            LogActions logLP = new LogActions(graph,graphPanel,loggingEnabled,
+                                    shortestPathProblemLP.getDestinationPathAsString(),"Shortest Path Problem - LP Optimization",
+                                    shortestPathProblemLP.getDestinationDistance(),elapsedTime, shortestPathProblemLP.getLogResultMessage());
+                            logLP.log();
+                        }
+
                     } catch (IllegalStateException ise) {
                         JOptionPane.showMessageDialog(null, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
                         JOptionPane.showMessageDialog(null, "Memory error, control it.");
-                    }catch (NullPointerException npe){}
+                    }catch (NullPointerException npe){} catch (GRBException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 } else if (comboBox.getSelectedItem() == "Augmenting-Path") {
                     AugmentingPathAlgorithm augmentingPathAlgorithm = new AugmentingPathAlgorithm(graph);
                     try {
