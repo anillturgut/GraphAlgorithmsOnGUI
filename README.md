@@ -14,16 +14,19 @@ Covered Problems & Corresponding Algorithms:
   - Topological Ordering Algorithm
   - Bellman-Ford Algorithm
   - Floyd-Warshall Algorithm
+  - LP Optimization Model of SPP 
 - Maximum Flow Problem:
   - Generic Augmenting Path Algorithm
   - Capacity Scaling Algorithm
   - PreFlow Push Algorithm
+  - LP Optimization Model of MFP
 
 
-Note that after downloading the source code or forking the repository to a working environment such as VSCode. Make sure that:
+- Note that after downloading the source code or forking the repository to a working environment such as VSCode. Make sure that:
     - You have an installed Java on your computer, if it is not download through browser. 
     - You have an installed Java Development Kit (JDK 20 or Latest).
     - Add the .jar files under the "lib" folder to the project build path to use Import/Export Excel functionality.
+    - Note that to run the "Optimization Algorithms", you must have a valid Gurobi License under C:/[user]/Documents/ (or /Users/[user]/Documents/ for Mac) folder.
 
 There will be template Excel files under "TemplateExcelFiles" folder, you can see what kind of input is expected from the application.
 

@@ -77,15 +77,6 @@ public class MaximumFlowProblemLP {
             // Set the objective function
             GRBLinExpr objExpr = new GRBLinExpr();
             objExpr.addTerm(1,V);
-            /*
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
-                    if (i != j) {
-                        if (isValidEdge(i,j))
-                            objExpr.addTerm(getEdgeWeight(i, j), x[i][j]);
-                    }
-                }
-            }*/
             model.setObjective(objExpr, GRB.MAXIMIZE);
 
             // Add constraints
