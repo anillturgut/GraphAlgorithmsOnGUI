@@ -97,6 +97,15 @@ public class LogActions {
         this.loggingEnabled = loggingEnabled;
         this.timeElapsed = timeElapsed;
     }
+    public LogActions(Graph graph, GraphPanel graphPanel,boolean loggingEnabled,
+                      String algorithmName, double timeElapsed,String optimizationResult){
+        this.graph = graph;
+        this.graphPanel = graphPanel;
+        this.algorithmName = algorithmName;
+        this.loggingEnabled = loggingEnabled;
+        this.timeElapsed = timeElapsed;
+        this.optimizationResult = optimizationResult;
+    }
 
     public void log(){
         setupLogger();
@@ -155,6 +164,9 @@ public class LogActions {
                     + maximumFlow + "\n" +
                     "Edge's residual/original capacities: \n" +
                     residualCapacities);
+        } else if (algorithmName.equals("Maximum Flow Problem - LP Optimization")) {
+            LOGGER.info("Maximum Flow Problem Optimization Results: \n" +
+                    optimizationResult);
         }
         LOGGER.info("Algorithm Completed!");
         LOGGER.info("Total elapsed time while executing " + algorithmName + "(sec) : " + timeElapsed + "\n\n");

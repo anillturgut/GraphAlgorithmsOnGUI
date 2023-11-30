@@ -341,6 +341,27 @@ public class MainWindow extends JPanel {
                     } catch (OutOfMemoryError ome) {
                         JOptionPane.showMessageDialog(null, "Memory error, control it.");
                     }catch (NullPointerException npe){}
+                }else if (comboBox.getSelectedItem() == "MaximumFlow-LP") {
+                    MaximumFlowProblemLP maximumFlowProblemLP = new MaximumFlowProblemLP(graph);
+                    try {
+                        graphPanel.setPath(null,comboBox.getSelectedItem().toString());
+                        maximumFlowProblemLP.run();
+                        long endTime = System.nanoTime();
+                        long elapsedTimeInNanos = endTime - startTime;
+                        double elapsedTime = elapsedTimeInNanos / 1e9;
+                        JOptionPane.showMessageDialog(null,
+                                maximumFlowProblemLP.getOptimizationResult());
+                        if (loggingEnabled){
+                            LogActions logMaxFlowLP = new LogActions(graph,graphPanel,loggingEnabled,
+                                    "Maximum Flow Problem - LP Optimization",elapsedTime,
+                                    maximumFlowProblemLP.getOptimizationResult());
+                            logMaxFlowLP.log();
+                        }
+                    } catch (IllegalStateException ise) {
+                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                    } catch (OutOfMemoryError ome) {
+                        JOptionPane.showMessageDialog(null, "Memory error, control it.");
+                    }catch (NullPointerException npe){}
                 } else if (comboBox.getSelectedItem() == "Topological-Ordering") {
                     TopologicalOrderingAlgorithm topologicalOrderingAlgorithm = new TopologicalOrderingAlgorithm(graph);
                     try {
@@ -460,7 +481,7 @@ public class MainWindow extends JPanel {
             if (firstTimeSwitch) {
                 String[] selection = {"Dijkstra's", "Bread-First-Search","Depth-First-Search",
                         "Topological-Ordering", "Bellman-Ford", "Floyd-Warshall", "ShortestPath-LP",
-                        "Augmenting-Path", "Capacity-Scaling", "PreFlow-Push"};
+                        "Augmenting-Path", "Capacity-Scaling", "PreFlow-Push","MaximumFlow-LP"};
                 for (int index = 0; index < selection.length; index++) {
                     comboBox.addItem(selection[index]);
                 }
