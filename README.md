@@ -1,7 +1,7 @@
 # GraphAlgorithmsOnGUI
 Graph &amp; Network Algorithms to solve complex problems.
 This project was created with the aim of improving the quality of academic studies and education, especially in Operations Research (OR) and Computer Science (CS).
-With this GUI (Graphical User Interface), the developer can create a directed graph (network) containing nodes (including source and destination) and arcs, and run algorithms that can solve certain problems efficiently (polynomial) on the network he creates.
+With this GUI (Graphical User Interface), the developer can create a directed graph (network) containing nodes (including source and destination) and arcs, and run algorithms that can solve certain problems efficiently (polynomial) on the network created.
 In addition, functionalities such as Excel Import, Excel Export and Logging have been developed within the application to enable the developer to work more efficiently.
 
 Covered Problems & Corresponding Algorithms:
