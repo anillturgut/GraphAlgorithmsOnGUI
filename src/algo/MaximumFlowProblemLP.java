@@ -163,6 +163,7 @@ public class MaximumFlowProblemLP {
 
         } catch (GRBException e) {
             e.printStackTrace();
+            throw new IllegalStateException("There is no valid Gurobi License");
         }
 
 
