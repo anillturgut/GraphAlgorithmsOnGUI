@@ -1,5 +1,6 @@
 package algo;
 
+import gui.MainWindow;
 import models.Edge;
 import models.Graph;
 import models.Node;
@@ -13,6 +14,8 @@ public class FloydWarshallAlgorithm {
     private String message = null;
 
     private Graph graph;
+
+    private MainWindow mainWindow;
     private Map<Node, Node> predecessors;
     private Map<Node, Integer> distances;
     private DefaultTableModel loggedTableModel;
@@ -30,12 +33,13 @@ public class FloydWarshallAlgorithm {
 
         return true;
     }
-    public FloydWarshallAlgorithm(Graph graph){
+    public FloydWarshallAlgorithm(Graph graph, MainWindow mainWindow){
         this.graph = graph;
         predecessors = new HashMap<>();
         distances = new HashMap<>();
         this.maxValue = 50000;
         initializeNodeDistances();
+        this.mainWindow = mainWindow;
 
         safe = evaluate();
     }
@@ -141,7 +145,7 @@ public class FloydWarshallAlgorithm {
         panel.add(scrollPane);
 
         // Show the matrix in a JOptionPane message dialog
-        JOptionPane.showMessageDialog(null, panel,
+        JOptionPane.showMessageDialog(mainWindow, panel,
                 "Shortest Path Distances From Each Node", JOptionPane.PLAIN_MESSAGE);
     }
     public Integer getDestinationDistance(){

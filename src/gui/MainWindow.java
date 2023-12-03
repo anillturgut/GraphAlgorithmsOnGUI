@@ -111,7 +111,7 @@ public class MainWindow extends JPanel {
         info.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,
+                JOptionPane.showMessageDialog(MainWindow.this,
                         "Click on empty space to create new node\n" +
                                 "Drag from node to node to create an edge\n" +
                                 "Click on edges to set the weight\n\n" +
@@ -135,7 +135,7 @@ public class MainWindow extends JPanel {
                         long elapsedTimeInNanos = endTime - startTime;
                         double elapsedTime = elapsedTimeInNanos / 1e9;
                         graphPanel.setPath(dijkstraAlgorithm.getDestinationPath(), comboBox.getSelectedItem().toString());
-                        JOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(MainWindow.this,
                                 "Shortest Path: " + dijkstraAlgorithm.getDestinationPathAsString() + "\n"
                                         + "              Total Distance: " + dijkstraAlgorithm.getDestinationDistance());
                         if (loggingEnabled){
@@ -145,7 +145,7 @@ public class MainWindow extends JPanel {
                             logDijkstra.log();
                         }
                     } catch (IllegalStateException ise) {
-                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                        JOptionPane.showMessageDialog(MainWindow.this, ise.getMessage());
                     }
                 } else if (comboBox.getSelectedItem() == "Bread-First-Search"){
                     BreadthFirstSearchAlgorithm breadthFirstSearchAlgorithm = new BreadthFirstSearchAlgorithm(graph);
@@ -155,7 +155,7 @@ public class MainWindow extends JPanel {
                         long elapsedTimeInNanos = endTime - startTime;
                         double elapsedTime = elapsedTimeInNanos / 1e9;
                         graphPanel.setPath(breadthFirstSearchAlgorithm.getDestinationPath(),comboBox.getSelectedItem().toString());
-                        JOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(MainWindow.this,
                                 "Traversed Path: " + breadthFirstSearchAlgorithm.getDestinationPathAsString() + "\n");
                         if (loggingEnabled){
                             LogActions logBFS = new LogActions(graph,graphPanel,loggingEnabled,
@@ -164,9 +164,9 @@ public class MainWindow extends JPanel {
                             logBFS.log();
                         }
                     } catch (IllegalStateException ise) {
-                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                        JOptionPane.showMessageDialog(MainWindow.this, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
-                        JOptionPane.showMessageDialog(null, "Memory error, control it.");
+                        JOptionPane.showMessageDialog(MainWindow.this, "Memory error, control it.");
                     }
                 }else if (comboBox.getSelectedItem() == "Depth-First-Search"){
                     DepthFirstSearchAlgorithm depthFirstSearchAlgorithm = new DepthFirstSearchAlgorithm(graph);
@@ -176,7 +176,7 @@ public class MainWindow extends JPanel {
                         long elapsedTimeInNanos = endTime - startTime;
                         double elapsedTime = elapsedTimeInNanos / 1e9;
                         graphPanel.setPath(depthFirstSearchAlgorithm.getDestinationPath(),comboBox.getSelectedItem().toString());
-                        JOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(MainWindow.this,
                                 "Traversed Path: " + depthFirstSearchAlgorithm.getDestinationPathAsString() + "\n");
                         if (loggingEnabled){
                             LogActions logDFS = new LogActions(graph,graphPanel,loggingEnabled,
@@ -185,9 +185,9 @@ public class MainWindow extends JPanel {
                             logDFS.log();
                         }
                     } catch (IllegalStateException ise) {
-                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                        JOptionPane.showMessageDialog(MainWindow.this, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
-                        JOptionPane.showMessageDialog(null, "Memory error, control it.");
+                        JOptionPane.showMessageDialog(MainWindow.this, "Memory error, control it.");
                     }
                 } else if (comboBox.getSelectedItem() == "Bellman-Ford") {
                     BellmanFordAlgorithm bellmanFordAlgorithm = new BellmanFordAlgorithm(graph);
@@ -197,7 +197,7 @@ public class MainWindow extends JPanel {
                         long elapsedTimeInNanos = endTime - startTime;
                         double elapsedTime = elapsedTimeInNanos / 1e9;
                         graphPanel.setPath(bellmanFordAlgorithm.getDestinationPath(),comboBox.getSelectedItem().toString());
-                        JOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(MainWindow.this,
                                 "Shortest Path: " + bellmanFordAlgorithm.getDestinationPathAsString() + "\n"
                                         + "              Total Distance: " + bellmanFordAlgorithm.getDestinationDistance());
                         if (loggingEnabled){
@@ -208,12 +208,12 @@ public class MainWindow extends JPanel {
                         }
 
                     } catch (IllegalStateException ise) {
-                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                        JOptionPane.showMessageDialog(MainWindow.this, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
-                        JOptionPane.showMessageDialog(null, "Memory error, control it.");
+                        JOptionPane.showMessageDialog(MainWindow.this, "Memory error, control it.");
                     }
                 }else if (comboBox.getSelectedItem() == "Floyd-Warshall") {
-                    FloydWarshallAlgorithm floydWarshallAlgorithm = new FloydWarshallAlgorithm(graph);
+                    FloydWarshallAlgorithm floydWarshallAlgorithm = new FloydWarshallAlgorithm(graph, MainWindow.this);
                     try {
                         floydWarshallAlgorithm.run();
                         long endTime = System.nanoTime();
@@ -223,7 +223,7 @@ public class MainWindow extends JPanel {
                         if (graph.getDestination() != null){
                             graphPanel.setPath(floydWarshallAlgorithm.getDestinationPath(),comboBox.getSelectedItem().toString());
                         }else{
-                            JOptionPane.showMessageDialog(null,
+                            JOptionPane.showMessageDialog(MainWindow.this,
                                     "Since there is no destination defined, path is not seen.");
                         }
                         if (loggingEnabled){
@@ -232,9 +232,9 @@ public class MainWindow extends JPanel {
                             logFloyd.log();
                         }
                     } catch (IllegalStateException ise) {
-                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                        JOptionPane.showMessageDialog(MainWindow.this, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
-                        JOptionPane.showMessageDialog(null, "Memory error, control it.");
+                        JOptionPane.showMessageDialog(MainWindow.this, "Memory error, control it.");
                     }catch (NullPointerException npe){}
                 }else if (comboBox.getSelectedItem() == "ShortestPath-LP") {
                     ShortestPathProblemLP shortestPathProblemLP = new ShortestPathProblemLP(graph);
@@ -244,7 +244,7 @@ public class MainWindow extends JPanel {
                         long elapsedTimeInNanos = endTime - startTime;
                         double elapsedTime = elapsedTimeInNanos / 1e9;
                         graphPanel.setPath(shortestPathProblemLP.getDestinationPath(),comboBox.getSelectedItem().toString());
-                        JOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(MainWindow.this,
                                         "Xij: Flow across (i,j) \n" +
                                 shortestPathProblemLP.getOptimizationResult() + "\n" +
                                         "Result from Dual: \n" +
@@ -258,9 +258,9 @@ public class MainWindow extends JPanel {
                         }
 
                     } catch (IllegalStateException ise) {
-                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                        JOptionPane.showMessageDialog(MainWindow.this, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
-                        JOptionPane.showMessageDialog(null, "Memory error, control it.");
+                        JOptionPane.showMessageDialog(MainWindow.this, "Memory error, control it.");
                     }catch (NullPointerException npe){} catch (GRBException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -272,7 +272,7 @@ public class MainWindow extends JPanel {
                         long endTime = System.nanoTime();
                         long elapsedTimeInNanos = endTime - startTime;
                         double elapsedTime = elapsedTimeInNanos / 1e9;
-                        JOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(MainWindow.this,
                                 "Maximum flow that can be sent from "+graph.getSource().toString() +
                                         " to " + graph.getDestination().toString() + " : "
                                         + augmentingPathAlgorithm.getMaxFlow() + "\n" +
@@ -285,9 +285,9 @@ public class MainWindow extends JPanel {
                             logAugmentingPath.log();
                         }
                     } catch (IllegalStateException ise) {
-                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                        JOptionPane.showMessageDialog(MainWindow.this, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
-                        JOptionPane.showMessageDialog(null, "Memory error, control it.");
+                        JOptionPane.showMessageDialog(MainWindow.this, "Memory error, control it.");
                     }catch (NullPointerException npe){}
                 }else if (comboBox.getSelectedItem() == "Capacity-Scaling") {
                     CapacityScalingAlgorithm capacityScalingAlgorithm = new CapacityScalingAlgorithm(graph);
@@ -297,7 +297,7 @@ public class MainWindow extends JPanel {
                         long endTime = System.nanoTime();
                         long elapsedTimeInNanos = endTime - startTime;
                         double elapsedTime = elapsedTimeInNanos / 1e9;
-                        JOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(MainWindow.this,
                                 "Maximum flow that can be sent from "+graph.getSource().toString() +
                                         " to " + graph.getDestination().toString() + " : "
                                         + capacityScalingAlgorithm.getMaxFlow() + "\n" +
@@ -312,9 +312,9 @@ public class MainWindow extends JPanel {
                             logCapacityScaling.log();
                         }
                     } catch (IllegalStateException ise) {
-                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                        JOptionPane.showMessageDialog(MainWindow.this, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
-                        JOptionPane.showMessageDialog(null, "Memory error, control it.");
+                        JOptionPane.showMessageDialog(MainWindow.this, "Memory error, control it.");
                     }catch (NullPointerException npe){}
                 }else if (comboBox.getSelectedItem() == "PreFlow-Push") {
                     PreFlowPushAlgorithm preflowPushAlgorithm = new PreFlowPushAlgorithm(graph);
@@ -324,7 +324,7 @@ public class MainWindow extends JPanel {
                         long endTime = System.nanoTime();
                         long elapsedTimeInNanos = endTime - startTime;
                         double elapsedTime = elapsedTimeInNanos / 1e9;
-                        JOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(MainWindow.this,
                                 "Maximum flow that can be sent from "+graph.getSource().toString() +
                                         " to " + graph.getDestination().toString() + " : "
                                         + preflowPushAlgorithm.getMaxFlow(graph.getDestination()) + "\n" +
@@ -337,9 +337,9 @@ public class MainWindow extends JPanel {
                             logPreFlow.log();
                         }
                     } catch (IllegalStateException ise) {
-                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                        JOptionPane.showMessageDialog(MainWindow.this, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
-                        JOptionPane.showMessageDialog(null, "Memory error, control it.");
+                        JOptionPane.showMessageDialog(MainWindow.this, "Memory error, control it.");
                     }catch (NullPointerException npe){}
                 }else if (comboBox.getSelectedItem() == "MaximumFlow-LP") {
                     MaximumFlowProblemLP maximumFlowProblemLP = new MaximumFlowProblemLP(graph);
@@ -349,7 +349,7 @@ public class MainWindow extends JPanel {
                         long endTime = System.nanoTime();
                         long elapsedTimeInNanos = endTime - startTime;
                         double elapsedTime = elapsedTimeInNanos / 1e9;
-                        JOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(MainWindow.this,
                                 maximumFlowProblemLP.getOptimizationResult());
                         if (loggingEnabled){
                             LogActions logMaxFlowLP = new LogActions(graph,graphPanel,loggingEnabled,
@@ -358,9 +358,9 @@ public class MainWindow extends JPanel {
                             logMaxFlowLP.log();
                         }
                     } catch (IllegalStateException ise) {
-                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                        JOptionPane.showMessageDialog(MainWindow.this, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
-                        JOptionPane.showMessageDialog(null, "Memory error, control it.");
+                        JOptionPane.showMessageDialog(MainWindow.this, "Memory error, control it.");
                     }catch (NullPointerException npe){}
                 } else if (comboBox.getSelectedItem() == "Topological-Ordering") {
                     TopologicalOrderingAlgorithm topologicalOrderingAlgorithm = new TopologicalOrderingAlgorithm(graph);
@@ -370,7 +370,7 @@ public class MainWindow extends JPanel {
                         long elapsedTimeInNanos = endTime - startTime;
                         double elapsedTime = elapsedTimeInNanos / 1e9;
                         graphPanel.setPath(topologicalOrderingAlgorithm.getDestinationPath(),comboBox.getSelectedItem().toString());
-                        JOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(MainWindow.this,
                                 "Topological Order: " + topologicalOrderingAlgorithm.getTopologicalOrderAsString() + "\n" +
                                 "Shortest Path: " + topologicalOrderingAlgorithm.getDestinationPathAsString() + "\n"
                                         + "              Total Distance: " + topologicalOrderingAlgorithm.getDestinationDistance());
@@ -383,15 +383,15 @@ public class MainWindow extends JPanel {
                         }
 
                     } catch (IllegalStateException ise) {
-                        JOptionPane.showMessageDialog(null, ise.getMessage());
+                        JOptionPane.showMessageDialog(MainWindow.this, ise.getMessage());
                     } catch (OutOfMemoryError ome) {
-                        JOptionPane.showMessageDialog(null, "Memory error, control it.");
+                        JOptionPane.showMessageDialog(MainWindow.this, "Memory error, control it.");
                     }
                 } else if (comboBox.getSelectedItem() == null){
-                    JOptionPane.showMessageDialog(null, "Please select an algorithm !" );
+                    JOptionPane.showMessageDialog(MainWindow.this, "Please select an algorithm !" );
                 }
                 else {
-                    JOptionPane.showMessageDialog(null,
+                    JOptionPane.showMessageDialog(MainWindow.this,
                             comboBox.getSelectedItem()+" algorithm has not been developed yet." );
                 }
             }
@@ -400,7 +400,7 @@ public class MainWindow extends JPanel {
         personal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,
+                JOptionPane.showMessageDialog(MainWindow.this,
                         "Anil Turgut <----->  2022702072\n" +
                                 "Industrial Engineering MSc Student\n" +
                                 "Bogazici University\n\n" +
@@ -423,7 +423,7 @@ public class MainWindow extends JPanel {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     File filePath = fileChooser.getSelectedFile();
                     /*
-                    JOptionPane.showMessageDialog(null,
+                    JOptionPane.showMessageDialog(MainWindow.this,
                             "Selected File Path: " + selectedFile.toString());*/
                     // Do something with the selected file, e.g., open or process it
                     ExcelImport excelImport = new ExcelImport(graph,graphPanel,filePath.toString());
