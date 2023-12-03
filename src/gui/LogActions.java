@@ -115,6 +115,9 @@ public class LogActions {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDateTime = currentDateTime.format(dateTimeFormatter);
         LOGGER.info(algorithmName + "\t\t" + "Time: " + formattedDateTime + "\n");
+        LOGGER.info("# of Nodes (n): " + graph.getNodes().size());
+        LOGGER.info("# of Edges (m): " + graph.getEdges().size());
+        LOGGER.info("Maximum cost/capacity (C/U): " + getMaxEdgeWeight());
         LOGGER.info("Node List: " + graph.getNodes().toString());
         LOGGER.info("Edge List: " + graph.getEdges().toString());
         if (algorithmName.equals("Dijkstra's Algorithm" ) || algorithmName.equals("Bellman Ford Algorithm") ||
@@ -247,5 +250,14 @@ public class LogActions {
             rootLogger.removeHandler(handler);
             handler.close();
         }
+    }
+    private int getMaxEdgeWeight(){
+        int max = Integer.MIN_VALUE;
+        for(Edge edge: graph.getEdges()){
+            if (edge.getWeight() > max){
+                max = edge.getWeight();
+            }
+        }
+        return max;
     }
 }
