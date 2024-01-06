@@ -162,8 +162,9 @@ public class MaximumFlowProblemLP {
             env.dispose();
 
         } catch (GRBException e) {
-            e.printStackTrace();
-            throw new IllegalStateException("There is no valid Gurobi License");
+            String gurobiErrorMessage = "No valid gurobi license is found!";
+            //e.printStackTrace();
+            throw new IllegalStateException(gurobiErrorMessage);
         }
 
 

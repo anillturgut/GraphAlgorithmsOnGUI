@@ -171,7 +171,9 @@ public class ShortestPathProblemLP {
             env.dispose();
 
         } catch (GRBException e) {
-            e.printStackTrace();
+            String gurobiErrorMessage = "No valid gurobi license is found!";
+            //e.printStackTrace();
+            throw new IllegalStateException(gurobiErrorMessage);
         }
 
 
